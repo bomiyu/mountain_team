@@ -80,7 +80,6 @@ h5 {
 </style>
 </head>
 <body>
-으아아아아ㅏㅇ아아ㅏㅇ아
 
 	<div class="container mt-5 ">
 	

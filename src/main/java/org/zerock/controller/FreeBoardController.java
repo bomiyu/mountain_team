@@ -1,6 +1,5 @@
 package org.zerock.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -46,35 +45,27 @@ public class FreeBoardController {
 	public void list(@ModelAttribute("cri") FCriteria cri, Model model) {
 		model.addAttribute("list", service.getList(cri));
 		int total = service.getTotal(cri);
-		
-		log.info("total:::::::::"+ total);
+
+		log.info("total:::::::::" + total);
 		model.addAttribute("pageMaker", new FPageDTO(cri, total));
 
-	
-		
-		
 	}
-	
-
 
 	@GetMapping("/register")
 	@RequestMapping("/register")
-	public void register(FreeBoardVO vo,HttpSession session) {
-		// /freeboard/register.jsp에 session 얻어와서 member_no라는이름으로 memberVO객체를 SET해줌v-일단pass
-		
-		Object user = session.getAttribute("authUser");
+	public void register(FreeBoardVO vo) {
 
 	}
 
-
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	@PostMapping("/register")
-	public String register(FreeBoardVO vo, Model model, RedirectAttributes rttr) {
-
-		service.register(vo);
-
+	public String register(FreeBoardVO vo, Model model, RedirectAttributes rttr, HttpSession session) {
 		rttr.addFlashAttribute("result", vo.getNo());
 		rttr.addFlashAttribute("message", vo.getNo() + "번 글이 등록되었습니다.");
+		// Session에 저장된 nickname을 writer에저장
+		String writer = (String) session.getAttribute("nickname");
+		vo.setWriter(writer);
+		service.register(vo);
 
 		return "redirect:/freeboard/list";
 	}
@@ -84,11 +75,10 @@ public class FreeBoardController {
 		log.info("get method - no: " + no);
 		FreeBoardVO vo = service.get(no);
 		model.addAttribute("freeboard", vo);
-				
-		
+
 //		FCriteria cri = new FCriteria();
 //		model.addAttribute("cri", cri);
-		
+
 //
 //		String old_url = request.getHeader("referer");
 //		System.out.println(" get, 수정 ======> "+old_url);
@@ -110,7 +100,7 @@ public class FreeBoardController {
 	}
 
 	@PostMapping("/remove")
-	public String remove(@RequestParam("no") Long no,@ModelAttribute("cri") FCriteria cri, RedirectAttributes rttr) {
+	public String remove(@RequestParam("no") Long no, @ModelAttribute("cri") FCriteria cri, RedirectAttributes rttr) {
 
 		if (service.remove(no)) {
 			rttr.addFlashAttribute("result", "success");
