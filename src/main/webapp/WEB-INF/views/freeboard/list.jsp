@@ -29,7 +29,7 @@
 				var result = '${result}';
 				var message = '${message}';
 
-				//checkModal(result);
+				checkModal(result);
 				checkModal2(message);
 
 				history.replaceState({}, null, null);
@@ -108,29 +108,26 @@ h5 {
 
 
 				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
-			</form>
-		</div>
-
-		<div class="d-flex flex-row-reverse p-2 bd-highlight">
-
-
-
-
-			<c:if test="${sessionScope.id != null}">
+				
+				<div class="d-flex flex-row-reverse p-2 bd-highlight">
+			<c:if test="${authUser.nickname != null}">
 				<a href='<c:url value='/freeboard/register'/>' role="button"
 					class="btn btn-outline-success">글쓰기</a>
 			</c:if>
-
 		</div>
+			</form>
+		</div>
+
+		
 
 		<div class="row">
 			<table class="table table-striped table-hover">
 				<thead>
 					<tr>
-						<td>${vo.cnt }개의게시물이 있습니다.</td>
+						<td>${cnt}개</td>
 					</tr>
 					<tr>
-						<th>#</th>
+						<th>no</th>
 						<th>제목</th>
 						<th>작성자</th>
 						<th>작성일</th>
@@ -152,8 +149,8 @@ h5 {
 							<td><a class='move' href='${boardLink }'> <c:out
 										value="${vo.title}" /></a></td>
 
-							<td><c:out value="${authUser.nickname }" /></td>
-							<td><fmt:formatDate pattern="yyyy-MM-dd"
+							<td><c:out value="${vo.user_nickname}" /></td>
+							<td><fmt:formatDate pattern="yyyy-MM-dd HH:MM:SS"
 									value="${vo.regdate}" /></td>
 
 						</tr>

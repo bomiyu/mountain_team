@@ -40,7 +40,7 @@ h5 {
 <body>
 
 	<div class="container mt-5 ">
-		<h5>글쓰기</h5>
+		<h5>글 보기</h5>
 	</div>
 	<div class="container-sm">
 
@@ -69,8 +69,9 @@ h5 {
 					</div>
 
 					<div class="form-group">
-						<label for="writer">작성자</label>
-						<%--     <input type="text" class="form-control" name="writer" id="writer" value=${user.name } readonly="readonly">  --%>
+						<label for="writer">작성자</label> <input type="text"
+							class="form-control" name="writer" id="writer"
+							value="${freeboard.writer}" readonly="readonly">
 					</div>
 
 
@@ -81,7 +82,10 @@ h5 {
 						<%-- 		<c:param name="type" value="${cri.type }" ></c:param>
 						<c:param name="keyword" value="${cri.keyword }" ></c:param>  --%>
 					</c:url>
-					<a href="${modifyLink }" class="btn btn-outline-success"> 수정 </a>
+
+					<c:if test="${authUser.nickname eq freeboard.user_nickname }">
+						<a href="${modifyLink }" class="btn btn-outline-success"> 수정 </a>
+					</c:if>
 
 					<c:url value="/freeboard/list" var="listLink">
 						<c:param name="no" value="${freeboard.no }"></c:param>

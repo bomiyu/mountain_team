@@ -46,7 +46,7 @@ h5 {
 <body>
 	<p id="text"></p>
 	<div class="container mt-5 ">
-		<h5>글쓰기</h5>
+		<h5>글 수정</h5>
 	</div>
 
 	<div class="container-sm">
@@ -77,21 +77,22 @@ h5 {
 					</div>
 
 					<div class="form-group">
-						<label for="writer">작성자</label>
-						<%--     <input type="text" class="form-control" name="writer" id="writer" value=${user.name } readonly="readonly">  --%>
+						<label for="writer">작성자</label> <input type="text"
+							class="form-control" name="writer" id="writer"
+							value="${nicks.writer}" readonly="readonly">
 					</div>
 
 
 					<input type="hidden" value="${cri.pageNum }" name="pageNum" /> <input
 						type="hidden" value="${cri.amount }" name="amount" />
-					<%-- <input
+					<input
 						type="hidden" value="${cri.keyword }" name="keyword" /> <input
-						type="hidden" value="${cri.type }" name="type" /> --%>
-
-					<button type="submit" class="btn btn-outline-success">수정</button>
-					<button id="remove-btn" type="submit"
-						class="btn btn-outline-success">삭제</button>
-
+						type="hidden" value="${cri.type }" name="type" /> 
+					
+						<button type="submit" class="btn btn-outline-success">수정</button>
+						<button id="remove-btn" type="submit"
+							class="btn btn-outline-success">삭제</button>
+					
 
 				</form>
 

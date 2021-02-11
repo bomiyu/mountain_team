@@ -17,7 +17,7 @@ public interface FreeBoardService {
 	public List<FreeBoardVO> getList(FCriteria cri);//paging처리를 위한 code
 
 	public FreeBoardVO get(Long no);
-
+	
 	public boolean remove(Long no);
 
 	public boolean modify(FreeBoardVO vo);

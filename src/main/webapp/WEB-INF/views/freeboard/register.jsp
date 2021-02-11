@@ -59,7 +59,7 @@ h5 {
 			<div class="col-12 col-sm-6 offset-sm-3">
 
 				<form id="newBoardForm" method="post"<%-- action="${pageContext.request.contextPath }/freeboard/register" --%>
-		>
+		>			<!--  <input type="hidden" name="user_nickname" value="${authUser.nickname }"/>  -->
 					<div class="form-group">
 						<label for="input1">제목</label> <input name="title" type="text"
 							class="form-control" id="input1" placeholder="제목을 입력하세요." required>
@@ -72,8 +72,6 @@ h5 {
 					</div>
 
 				            <div class="form-group">
-             <label for="writer">작성자</label>
-     <input type="text" class="form-control" name="writer" id="writer" readonly="readonly" value="${authUser.nickname}" required/> 
            </div>
 
 					<button id="go" type="submit" class="btn btn-outline-success">글쓰기</button>
