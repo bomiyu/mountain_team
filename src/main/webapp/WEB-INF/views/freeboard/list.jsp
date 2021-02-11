@@ -82,44 +82,53 @@ h5 {
 <body>
 
 	<div class="container mt-5 ">
-	
-	<a href='<c:url value='/freeboard/list'/>'> <h5>자유게시판</h5></a>
-		
+
+		<a href='<c:url value='/freeboard/list'/>'>
+			<h5>자유게시판</h5>
+		</a>
+
 	</div>
 
 	<div class="container-sm mt-5">
-	<div class="col-lg-12 d-flex flex-row-reverse p-2 bd-highlight ">
-					<form id="searchForm" action='${root }/freeboard/list' method='get'
-						class="form-inline my-2 my-lg-0">
-						<select name="type" class="btn btn-outline-success  ">
-						    <option value="TWC" ${pageMaker.cri.type eq 'TWC' ? 'selected' : '' }>제목 / 내용 / 작성자</option>
-							<option value="T" ${pageMaker.cri.type eq 'T' ? 'selected' : '' }>제목</option>
-							<option value="C" ${pageMaker.cri.type eq 'C' ? 'selected' : '' }>내용</option>
-							<option value="W" ${pageMaker.cri.type eq 'W' ? 'selected' : '' }>작성자</option>
-						</select> <input name="keyword" class="form-control" required
-							value="${pageMaker.cri.keyword }" type="search" /> 
-							<input type="hidden" name="pageNum" value=${pageMaker.cri.pageNum } /> 
-							<input type="hidden"
-							name="amount" value='${pageMaker.cri.amount }' />
+		<div class="col-lg-12 d-flex flex-row-reverse p-2 bd-highlight ">
+			<form id="searchForm" action='${root }/freeboard/list' method='get'
+				class="form-inline my-2 my-lg-0">
+				<select name="type" class="btn btn-outline-success  ">
+					<!-- 검색조건 처리 후에 보여주기위한jstl문 -->
+					<option value="TWC"
+						${pageMaker.cri.type eq 'TWC' ? 'selected' : '' }>제목 / 내용
+						/ 작성자</option>
+					<option value="T" ${pageMaker.cri.type eq 'T' ? 'selected' : '' }>제목</option>
+					<option value="C" ${pageMaker.cri.type eq 'C' ? 'selected' : '' }>내용</option>
+					<option value="W" ${pageMaker.cri.type eq 'W' ? 'selected' : '' }>작성자</option>
+				</select> <input name="keyword" class="form-control" required
+					value="${pageMaker.cri.keyword }" type="search" /> <input
+					type="hidden" name="pageNum" value=${pageMaker.cri.pageNum } /> <input
+					type="hidden" name="amount" value='${pageMaker.cri.amount }' />
 
 
-						<button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
-					</form>
-				</div>
-				
+				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
+			</form>
+		</div>
+
 		<div class="d-flex flex-row-reverse p-2 bd-highlight">
 
-		
-				
-			
-			
-			<a href='<c:url value='/freeboard/register'/>' role="button"
-				class="btn btn-outline-success">글쓰기</a>
+
+
+
+			<c:if test="${sessionScope.id != null}">
+				<a href='<c:url value='/freeboard/register'/>' role="button"
+					class="btn btn-outline-success">글쓰기</a>
+			</c:if>
 
 		</div>
+
 		<div class="row">
 			<table class="table table-striped table-hover">
 				<thead>
+					<tr>
+						<td>${vo.cnt }개의게시물이 있습니다.</td>
+					</tr>
 					<tr>
 						<th>#</th>
 						<th>제목</th>
