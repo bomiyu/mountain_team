@@ -79,8 +79,9 @@ h5 {
 						<c:param name="no" value="${freeboard.no }"></c:param>
 						<c:param name="pageNum" value="${cri.pageNum }"></c:param>
 						<c:param name="amount" value="${cri.amount }"></c:param>
-						<%-- 		<c:param name="type" value="${cri.type }" ></c:param>
-						<c:param name="keyword" value="${cri.keyword }" ></c:param>  --%>
+					<!-- 조회페이지에서의 검색처리  -->
+						<c:param name="type" value="${cri.type }" ></c:param>
+						<c:param name="keyword" value="${cri.keyword }" ></c:param>
 					</c:url>
 
 					<c:if test="${authUser.nickname eq freeboard.user_nickname }">

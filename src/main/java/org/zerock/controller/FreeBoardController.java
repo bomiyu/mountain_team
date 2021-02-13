@@ -71,11 +71,9 @@ public class FreeBoardController {
 		vo.setUser_nickname(User.getNickname());
 		
 		/*
-		 * //값셋팅확인 String nicktest = vo.getWriter(); log.info("nick셋팅은???"+nicktest);
+		 * //값셋팅확인 String nick = vo.getUser_nickname(); log.info("nick셋팅은???"+nick);
 		 */
 		
-		
-//		log.info("usernick은???"+nick);
 //		log.info(User.getName());
 		service.register(vo);
 		rttr.addFlashAttribute("result", vo.getNo());
@@ -98,11 +96,8 @@ public class FreeBoardController {
 		
 		
 //		FCriteria cri = new FCriteria();
-//		model.addAttribute("cri", cri);
+//		model.addAttribute("cri", cri);//위의 ModelAttribute와 같은것 !
 
-//
-//		String old_url = request.getHeader("referer");
-//		System.out.println(" get, 수정 ======> "+old_url);
 	}
 
 	@PostMapping("/modify")
@@ -115,6 +110,7 @@ public class FreeBoardController {
 
 		rttr.addAttribute("pageNum", cri.getPageNum());
 		rttr.addAttribute("amount", cri.getAmount());
+//	 조회페이지에서의 검색처리 (수정,삭제는 컨트롤러에 redirect 방식으로 동작하므로 type, keyword 조건 같이 rttr에 포함
 		rttr.addAttribute("type", cri.getType());
 		rttr.addAttribute("keyword", cri.getKeyword());
 

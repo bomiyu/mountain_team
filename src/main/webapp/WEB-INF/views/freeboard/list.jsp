@@ -104,21 +104,21 @@ h5 {
 				</select> <input name="keyword" class="form-control" required
 					value="${pageMaker.cri.keyword }" type="search" /> <input
 					type="hidden" name="pageNum" value=${pageMaker.cri.pageNum } /> <input
-					type="hidden" name="amount" value='${pageMaker.cri.amount }' />
+					type="hidden" name="amount" value='${pageMaker.cri.amount }' /> <!-- 조건과 키워드  같이 전달해야 이후에도 키워드 유지 -->
 
 
 				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
-				
+
 				<div class="d-flex flex-row-reverse p-2 bd-highlight">
-			<c:if test="${authUser.nickname != null}">
-				<a href='<c:url value='/freeboard/register'/>' role="button"
-					class="btn btn-outline-success">글쓰기</a>
-			</c:if>
-		</div>
+					<c:if test="${authUser.nickname != null}">
+						<a href='<c:url value='/freeboard/register'/>' role="button"
+							class="btn btn-outline-success">글쓰기</a>
+					</c:if>
+				</div>
 			</form>
 		</div>
 
-		
+
 
 		<div class="row">
 			<table class="table table-striped table-hover">
