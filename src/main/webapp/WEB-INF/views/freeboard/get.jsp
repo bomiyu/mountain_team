@@ -71,7 +71,7 @@ h5 {
 					<div class="form-group">
 						<label for="writer">작성자</label> <input type="text"
 							class="form-control" name="writer" id="writer"
-							value="${freeboard.writer}" readonly="readonly">
+							value='<c:out value="${freeboard.user_nickname}" />' readonly="readonly">
 					</div>
 
 

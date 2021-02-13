@@ -21,6 +21,4 @@ public interface FreeBoardMapper {
 
 	public int update(FreeBoardVO vo);
 
-//	public void updateCnt(@Param("no") Long no, @Param("amount") int amount);
-
 }

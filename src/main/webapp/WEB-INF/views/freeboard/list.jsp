@@ -77,6 +77,8 @@ h5 {
 	text-align: center;
 	text-size: 60pt;
 }
+
+
 </style>
 </head>
 <body>
@@ -104,7 +106,8 @@ h5 {
 				</select> <input name="keyword" class="form-control" required
 					value="${pageMaker.cri.keyword }" type="search" /> <input
 					type="hidden" name="pageNum" value=${pageMaker.cri.pageNum } /> <input
-					type="hidden" name="amount" value='${pageMaker.cri.amount }' /> <!-- 조건과 키워드  같이 전달해야 이후에도 키워드 유지 -->
+					type="hidden" name="amount" value='${pageMaker.cri.amount }' />
+				<!-- 조건과 키워드  같이 전달해야 이후에도 키워드 유지 -->
 
 
 				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
@@ -138,20 +141,21 @@ h5 {
 
 					<c:forEach items="${list}" var="vo" varStatus="status">
 						<tr>
-							<td>${(pageMaker.cri.pageNum -1) * pageMaker.cri.amount + status.index + 1}
-								<c:url value="/freeboard/get" var="boardLink">
-									<c:param value="${vo.no  }" name="no" />
-									<c:param value="${pageMaker.cri.pageNum }" name="pageNum" />
-									<c:param value="${pageMaker.cri.amount }" name="amount" />
-									<c:param value="${pageMaker.cri.type }" name="type" />
-									<c:param value="${pageMaker.cri.keyword }" name="keyword" />
-								</c:url>
-							<td><a class='move' href='${boardLink }'> <c:out
+							<td width="10%" >${(pageMaker.cri.pageNum -1) * pageMaker.cri.amount + status.index + 1}
+							</td> <!-- 열간격  -->
+							<c:url value="/freeboard/get" var="boardLink">
+								<c:param value="${vo.no  }" name="no" />
+								<c:param value="${pageMaker.cri.pageNum }" name="pageNum" />
+								<c:param value="${pageMaker.cri.amount }" name="amount" />
+								<c:param value="${pageMaker.cri.type }" name="type" />
+								<c:param value="${pageMaker.cri.keyword }" name="keyword" />
+							</c:url>
+							<td width="50%"><a class='move' href='${boardLink }'> <c:out
 										value="${vo.title}" /></a></td>
 
-							<td><c:out value="${vo.user_nickname}" /></td>
-							<td><fmt:formatDate pattern="yyyy-MM-dd HH:MM:SS"
-									value="${vo.regdate}" /></td>
+							<td width="20%"><c:out value="${vo.user_nickname}" /></td>
+							<td width="20%"><fmt:formatDate
+									pattern="yyyy-MM-dd hh:mm:ss" value="${vo.regdate}" /></td>
 
 						</tr>
 					</c:forEach>

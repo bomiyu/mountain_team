@@ -22,13 +22,15 @@
 		<![CDATA[ select * from FreeBoard where no > 0 ]]> </select> -->
 
 	<!--20210210 작성자부분 + -->
-	<select id="getList" resultType="org.zerock.domain.freeboard.FreeBoardVO">
+	<select id="getList"
+		resultType="org.zerock.domain.freeboard.FreeBoardVO">
 		SELECT f.no, f.title, f.content,
-		f.regdate, f.cnt, f.member_no,
+		f.regdate, f.cnt,
+		f.member_no,
 		f.user_nickname
 		FROM FreeBoard f
-		LEFT
-		OUTER JOIN Member m ON f.user_nickname=m.nickname
+		INNER JOIN Member m ON
+		f.user_nickname=m.nickname
 	</select>
 	<select id="getListWithPaging"
 		resultType="org.zerock.domain.freeboard.FreeBoardVO"> 
@@ -40,7 +42,7 @@
 				select /*+INDEX_ASC(Freeboard pk_freeboardno)*/ 
 					rownum rn, no, title, content, regdate, cnt, member_no, user_nickname
 				from
-					FreeBoard
+					FreeBoard 
 					
 					]]>
 		<include refid="fcriteria"></include>
@@ -55,14 +57,15 @@
 
 	<select id="getTotalCount" resultType="int">
 		SELECT count(*)
-		FROM FreeBoard f
-		LEFT OUTER JOIN Member m ON f.user_nickname=m.nickname
+		FROM
+		FreeBoard f
+		INNER JOIN Member m ON f.user_nickname=m.nickname
 	</select><!-- resultType을 int로반환 -->
 
 
 	<insert id="insertSelectKey">
 		<selectKey keyProperty="no" order="BEFORE" resultType="long">
-			select seq_freeboard.nextval FROM dual
+			select seq_freeboard.nextval FROM Dual
 		</selectKey>
 
 		INSERT INTO FreeBoard (no ,title, content, member_no, user_nickname)
@@ -70,7 +73,8 @@
 		#{title}, #{content}, #{member_no}, #{user_nickname} )
 
 	</insert>
-	<select id="get" resultType="org.zerock.domain.freeboard.FreeBoardVO">
+	<select id="get"
+		resultType="org.zerock.domain.freeboard.FreeBoardVO">
 		select * from FreeBoard where no =
 		#{no}
 	</select>
@@ -87,12 +91,6 @@
 		WHERE
 		no = #{no}
 	</update>
-
-
-	<!-- <update id="updateCnt"> UPDATE FreeBoard SET cnt = cnt + #{amount} 
-		WHERE no = #{no} </update> -->
-
-
 
 
 

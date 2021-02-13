@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.zerock.mapper.FReplyMapper"><!-- namespace주의~! -->
+
+	<insert id="insertSelectKey">
+		<selectKey keyProperty="no" order="BEFORE" resultType="long">
+			SELECT seq_freply.nextval FROM dual
+		</selectKey>
+		INSERT INTO FREPLY (no, board_no, reply, replyer)
+		VALUES (seq_freply.nextval, #{board_no}, #{reply}, #{replyer})
+	</insert>
+
+	<select id="read" resultType="org.zerock.domain.freeboard.FReplyVO">
+		SELECT * FROM FREPLY WHERE no = #{no}
+	</select>
+	
+	<delete id="delete">
+		DELETE FREPLY WHERE no = #{no}
+	</delete>
+
+	<update id="update">
+		UPDATE FREPLY SET reply = #{reply}, updateDate = sysdate
+		WHERE no = #{no}
+	</update>	
+	
+	<select id="getListWithPaging" resultType="org.zerock.domain.freeboard.FReplyVO">
+		SELECT no, board_no, reply, replyer, regdate, updatedate
+		FROM FREPLY
+		WHERE no = #{no} <!-- @Param("no")와 매칭되어 사용됨 -->
+		ORDER BY no ASC
+	</select>
+	
+</mapper>
+
+
+
+

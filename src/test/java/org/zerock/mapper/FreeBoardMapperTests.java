@@ -69,22 +69,27 @@ public class FreeBoardMapperTests {
 
 	@Test
 	public void testDelete() {
-		FreeBoardVO vo = new FreeBoardVO();
-		vo.setTitle("제목");
-		vo.setContent("삭제test");
-		vo.setMember_no(1);
-
-		mapper.insertSelectKey(vo);
-
-		int before = mapper.getList().size();
-
-		int cnt = mapper.delete(vo.getNo());
-		assertEquals(1, cnt);
-		int after = mapper.getList().size();
-
-		assertEquals(before - 1, after);
+//		FreeBoardVO vo = new FreeBoardVO();
+//		vo.setTitle("제목");
+//		vo.setContent("삭제test");
+//		vo.setMember_no(1);
+//
+//		mapper.insertSelectKey(vo);
+//
+//		int before = mapper.getList().size();
+//
+//		int cnt = mapper.delete(vo.getNo());
+//		assertEquals(1, cnt);
+//		int after = mapper.getList().size();
+//
+//		assertEquals(before - 1, after);
+		
+		Long no = 11000243L;
+		mapper.delete(no);
+		
 	}
 
+	
 	@Test
 	public void testUpdate() {
 		FreeBoardVO vo = new FreeBoardVO();
