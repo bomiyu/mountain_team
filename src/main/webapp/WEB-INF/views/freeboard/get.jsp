@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="m" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%-- <%@ taglib prefix="u" tagdir="/WEB-INF/tags" %> --%>
@@ -38,7 +39,7 @@ h5 {
 </style>
 </head>
 <body>
-
+	<m:topNav />
 	<div class="container mt-5 ">
 		<h5>글 보기</h5>
 	</div>
@@ -71,7 +72,8 @@ h5 {
 					<div class="form-group">
 						<label for="writer">작성자</label> <input type="text"
 							class="form-control" name="writer" id="writer"
-							value='<c:out value="${freeboard.user_nickname}" />' readonly="readonly">
+							value='<c:out value="${freeboard.user_nickname}" />'
+							readonly="readonly">
 					</div>
 
 
@@ -79,9 +81,9 @@ h5 {
 						<c:param name="no" value="${freeboard.no }"></c:param>
 						<c:param name="pageNum" value="${cri.pageNum }"></c:param>
 						<c:param name="amount" value="${cri.amount }"></c:param>
-					<!-- 조회페이지에서의 검색처리  -->
-						<c:param name="type" value="${cri.type }" ></c:param>
-						<c:param name="keyword" value="${cri.keyword }" ></c:param>
+						<!-- 조회페이지에서의 검색처리  -->
+						<c:param name="type" value="${cri.type }"></c:param>
+						<c:param name="keyword" value="${cri.keyword }"></c:param>
 					</c:url>
 
 					<c:if test="${authUser.nickname eq freeboard.user_nickname }">

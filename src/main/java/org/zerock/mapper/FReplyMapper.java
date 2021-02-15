@@ -14,5 +14,5 @@ public interface FReplyMapper {
 	public int update(FReplyVO reply);
 	public List<FReplyVO> getListWithPaging(
 			@Param("fcri") FCriteria fcri,
-			@Param("no") Long no);
+			@Param("board_no") Long board_no);
 }

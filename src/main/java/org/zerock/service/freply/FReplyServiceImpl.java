@@ -44,8 +44,8 @@ public class FReplyServiceImpl implements FReplyService {
 	}
 
 	@Override
-	public List<FReplyVO> getList(FCriteria fcri, Long bno) {
-		return mapper.getListWithPaging(fcri, bno);
+	public List<FReplyVO> getList(FCriteria fcri, Long board_no) {
+		return mapper.getListWithPaging(fcri, board_no);
 	}
 
 }

@@ -1,6 +1,7 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="m" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
@@ -68,21 +69,45 @@
 </script>
 <%-- <link rel="stylesheet" type="text/css"
 	href="${root }/resources/css/font.css"> --%>
-<title>Insert title here</title>
+<title>자유게시판</title>
 
 
 
 <style>/* css */
+/* a태그 밑줄삭제, color변경 */
+ a:link { text-decoration:none; color:#000000;}
+ a:visited { text-decoration:none;color:#000000;}
+ a:active {text-decoration:none; color:#ffffff; }
+ a:hover { text-decoration:none; color:#28a745;}
+
+
 h5 {
 	text-align: center;
 	text-size: 60pt;
 }
+/* pagenation색상 변경 */
+.my.pagination > .active > a, 
+.my.pagination > .active > a:hover, 
+.my.pagination > .active > a:focus{
+  background: green;
+  border-color: green;
+  color: white;
+
+}
+
+.my.pagination> .page-item >a {
+color: #28a745;
+    border-color: #28a745;
+}
+
+
+
 
 
 </style>
 </head>
 <body>
-
+	<m:topNav />
 	<div class="container mt-5 ">
 
 		<a href='<c:url value='/freeboard/list'/>'>
@@ -141,8 +166,9 @@ h5 {
 
 					<c:forEach items="${list}" var="vo" varStatus="status">
 						<tr>
-							<td width="10%" >${(pageMaker.cri.pageNum -1) * pageMaker.cri.amount + status.index + 1}
-							</td> <!-- 열간격  -->
+							<td width="10%">${(pageMaker.cri.pageNum -1) * pageMaker.cri.amount + status.index + 1}
+							</td>
+							<!-- 열간격  -->
 							<c:url value="/freeboard/get" var="boardLink">
 								<c:param value="${vo.no  }" name="no" />
 								<c:param value="${pageMaker.cri.pageNum }" name="pageNum" />
@@ -195,7 +221,7 @@ h5 {
 	<div class="container-sm mt-3">
 		<div class="row justify-content-center">
 			<nav aria-label="Page navigation example">
-				<ul class="pagination">
+				<ul class="pagination my"> <!-- css변경위해 class에 my추가 -->
 
 					<c:if test="${pageMaker.prev }">
 						<c:url value="/freeboard/list" var="prevLink">
@@ -204,7 +230,7 @@ h5 {
 							<c:param name="type" value="${pageMaker.cri.type }" />
 							<c:param name="keyword" value="${pageMaker.cri.keyword }" />
 						</c:url>
-						<li class="page-item"><a class="page-link"
+						<li  class="page-item"><a class="page-link"
 							href="${pageMaker.startPage -1 }">Previous</a></li>
 					</c:if>
 
@@ -216,7 +242,7 @@ h5 {
 							<c:param name="type" value="${pageMaker.cri.type }" />
 							<c:param name="keyword" value="${pageMaker.cri.keyword }" />
 						</c:url>
-						<li
+						<li 
 							class="page-item ${pageMaker.cri.pageNum eq num ? 'active' : '' }">
 							<a class="page-link" href="${num }">${num }</a>
 						</li>
@@ -229,7 +255,7 @@ h5 {
 							<c:param name="type" value="${pageMaker.cri.type }" />
 							<c:param name="keyword" value="${pageMaker.cri.keyword }" />
 						</c:url>
-						<li class="page-item"><a class="page-link"
+						<li  class="page-item"><a class="page-link"
 							href="${pageMaker.endPage +1 }">Next</a></li>
 					</c:if>
 				</ul>

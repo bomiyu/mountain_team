@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="m" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%-- <%@ taglib prefix="u" tagdir="/WEB-INF/tags" %> --%>
@@ -44,6 +45,7 @@ h5 {
 
 </head>
 <body>
+	<m:topNav />
 	<p id="text"></p>
 	<div class="container mt-5 ">
 		<h5>글 수정</h5>
@@ -79,7 +81,7 @@ h5 {
 					<div class="form-group">
 						<label for="writer">작성자</label> <input type="text"
 							class="form-control" name="writer" id="writer"
-							value="${nicks.writer}" readonly="readonly">
+							value="${freeboard.user_nickname}" readonly="readonly">
 					</div>
 
 

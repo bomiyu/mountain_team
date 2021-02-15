@@ -25,7 +25,7 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">자유게시판</a>
+        <a class="nav-link" href='<c:url value="/freeboard/list"/>' >자유게시판</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">맛집게시판</a>
