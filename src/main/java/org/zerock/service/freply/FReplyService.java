@@ -14,5 +14,5 @@ public interface FReplyService {
 	
 	public int remove(Long no);
 	
-	public List<FReplyVO> getList(FCriteria fcri, Long no);
+	public List<FReplyVO> getList(FCriteria fcri, Long board_no);
 }

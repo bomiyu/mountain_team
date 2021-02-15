@@ -2,11 +2,15 @@ package org.zerock.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.zerock.domain.freeboard.FCriteria;
 import org.zerock.domain.freeboard.FReplyVO;
+import org.zerock.domain.member.MemberVO;
 import org.zerock.service.freply.FReplyService;
 
 import lombok.AllArgsConstructor;
@@ -30,7 +35,7 @@ public class FReplyController {
 
 	@PostMapping(value = "/new", consumes = MediaType.APPLICATION_JSON_VALUE, // 브라우저에서는 JOSN,서버에서는 문자열로 결과를 알려주도록
 			produces = MediaType.TEXT_PLAIN_VALUE)
-	public ResponseEntity<String> create(@RequestBody FReplyVO vo) { // @RequestBodty이용하여 FReplyVO타입으로 반환하도록 지정
+	public ResponseEntity<String> register(@RequestBody FReplyVO vo) { // @RequestBodty이용하여 FReplyVO타입으로 반환하도록 지정
 
 		log.info("vo: " + vo);
 
@@ -48,12 +53,17 @@ public class FReplyController {
 	@GetMapping(value = "/pages/{board_no}/{page}", produces = { MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public ResponseEntity<List<FReplyVO>> getList(@PathVariable("page") int page, // page값은 FCriteria를 생성 해서 직접 처리
-			@PathVariable("board_no") Long board_no) {
-
-		FCriteria fcri = new FCriteria(page, 10); // FCriteria를 통해 파라미터 수집
-
+			@PathVariable("board_no") Long board_no, @ModelAttribute("fvo") FReplyVO fvo, @ModelAttribute("fcri") FCriteria fcri, Model model, HttpSession session) {
+		MemberVO User =(MemberVO) session.getAttribute("authUser"); //get.jsp에서 사용할 정보
+		fvo.setReplyer(User.getNickname());
+		log.info("닉넴ㅁㅁㅁㅁㅁㅁㅁㅁ"+User.getNickname());
+		
+		
+		new FCriteria(page, 10); // FCriteria를 통해 파라미터 수집
+		
 		List<FReplyVO> list = service.getList(fcri, board_no);
-
+		
+		model.addAttribute("freplylist", list);
 		log.info(list);
 
 		return new ResponseEntity<List<FReplyVO>>(list, HttpStatus.OK);

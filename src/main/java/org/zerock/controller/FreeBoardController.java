@@ -65,11 +65,10 @@ public class FreeBoardController {
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	@PostMapping("/register")
 	public String register(@ModelAttribute("vo") FreeBoardVO vo, Model model, RedirectAttributes rttr, HttpSession session) {
-		// Session에 저장된 nickname을 writer에저장
+		// Session에 저장된 nickname을 User_nickname에저장
 		MemberVO User =(MemberVO) session.getAttribute("authUser");
-		System.out.println("유저의 닉네임은"+vo.getUser_nickname());
 		vo.setUser_nickname(User.getNickname());
-		
+		System.out.println("유저의 닉네임은"+vo.getUser_nickname());
 		/*
 		 * //값셋팅확인 String nick = vo.getUser_nickname(); log.info("nick셋팅은???"+nick);
 		 */

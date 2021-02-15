@@ -7,6 +7,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script>
+	var appRoot = '${root}';
+	var board_no = '${freeboard.no}';
+</script>
 <meta charset="UTF-8">
 <!-- MOBILE최적화 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,24 +22,185 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<!-- <script src="https://kit.fontawesome.com/a076d05399.js"></script>
- -->
-<script type="text/javascript" src="/resources/js/freeboard/freereply.js"></script>
 
- <script type="text/javascript">
-	var appRoot = '${root}';
-	/* var no = $
-	{
-		FreeBoard.no
-	}; */
+<script src="${root }/resources/js/freeboard/freply.js"></script>
+<script>
+	/* 	console.log("~~~~~~~~~~");
+	 console.log("js test");
+
+	 var boardnoValue = '<c:out value="${freeboard.no}"/>'; */
+	/* 
+	//test
+	FReplyService.register({
+		reply : "js test",
+		replyer : "tester",
+		board_no : boardnoValue
+	}, function(result) {
+		alert("RESULT: " + result);
+	});
+
+	//목록 얻어오기 test
+	FReplyService.getList({
+		board_no : boardnoValue,
+		page : 1
+	}, function(list) {//파라미터는 js에 전달됨 
+		for (var i = 0, len = list.length || 0; i < len; i++) {
+			console.log(list[i]);
+		}
+	});
+
+	//댓글 삭제
+	FReplyService.remove(152, function(count) {
+		console.log(count);
+		if (count === "success") {
+			alert("삭제되었습니다.");
+		}
+	}, function(err) {
+		alert('error.');
+	});
+	//댓글 수정
+	FReplyService.update({
+		no : 156,
+		board_no : boardnoValue,
+		reply : "ㅋㅋㅋ수정되라!~!js test!!!!!!!!!!"
+
+	}, function(result) {
+		alert("RESULT: " + result);
+	});
+	//댓글 조회
+	FReplyService.get(12010243, function(data) {
+		console.log(data);
+	}); */
 </script>
 
+<script>
+	$(document)
+			.ready(
+					function() {
 
+						// 날짜 형식
+						function dateString(date) {
+							var d = new Date(date);
+							return d.toISOString().split("T")[0];
+						}
 
-<title>Insert title here</title>
+						// 댓글 목록 가져오기 함수
+						function showList() {
+							FReplyService
+									.getList(
+											{
+												board_no : board_no
+											},
+											function(list) {
+												// console.log(list);
+
+												var replyUL = $("#freply-ul");
+												replyUL.empty();
+												for (var i = 0; i < list.length; i++) {
+													var replyLI = '<li class="media" data-no="' 
+									+ list[i].no + '" ><div class="media-body"><h5 style="float: right;">'
+															+ list[i].replyer
+															+ '&nbsp&nbsp&nbsp'
+															+ '<small class="float-right">'
+															+ dateString(list[i].regdate)
+															+ "</small></h5>"
+															+ list[i].reply
+															+ "<hr></div></li>";
+
+													replyUL.append(replyLI);
+												}
+											});
+						}
+					
+
+/* 	// 댓글쓰기 버튼 click이벤트 처리
+	$("#new-freply-button").click(function() { //댓글 쓰기 id가져옴
+		console.log("댓글쓰기버튼 동작????????");
+		$("#new-freply-modal").modal("show");
+
+	}); */
+
+	 //모달창_새로운 댓글_등록버튼 처리
+	$("#freply-submit-button").click(function() {
+		
+		
+	// textarea에서 value 가져와서 변수에 저장
+	var reply = $("#freply-textarea").val();
+	var replyer = $("#replyer-textarea").val();
+	console.log("reply:::::::::::::"+reply);
+	// ajax 요청을 위한 데이터 만들기
+	var data = {board_no: board_no, reply: reply, replyer: replyer};
+	
+	FReplyService.register(data,
+	function() {
+	// 댓글 목록 가져오기 실행
+	showList();
+	alert("${freeboard.user_nickname}"+"님의 댓글 등록에 성공하였습니다.");
+	},
+	function() {
+	alert("${freeboard.user_nickname}"+"님의댓글 등록에 실패하였습니다. 재시도 해주세요.")
+	});
+	
+	// 모달창 닫기
+	$("#new-freply-modal").modal("hide");
+	// 모달창 내의 textarea 요소들 value를 초기화
+	$("#new-freply-modal textarea").val("");
+	
+	
+	});
+	 
+	
+	
+	// 댓글 목록 가져오기 실행
+	showList();
+
+});
+	/* 	
+	
+	// reply-ul 클릭 이벤트 처리
+	$("#reply-ul").on("click", "li", function() {
+	// console.log("reply ul clicked......");
+	console.log($(this).attr("data-rno"));
+	
+	// 하나의 댓글 읽어오기
+	var rno = $(this).attr("data-rno");
+	replyService.get(rno, function(data) {
+	$("#rno-input2").val(rno);
+	$("#reply-input2").val(data.reply);
+	$("#replyer-input2").val(data.replyer);
+	$("#modify-reply-modal").modal('show');
+	});
+	
+	});
+	
+	// 수정 버튼 이벤트 처리
+	$("#reply-modify-button").click(function() {
+	var rno = $("#rno-input2").val();
+	var reply = $("#reply-input2").val();
+	var data = {rno:rno , reply: reply};
+	
+	replyService.update(data, function() {
+	alert("댓글을 수정하였습니다.");
+	$("#modify-reply-modal").modal('hide');
+	showList();
+	});
+	});
+	
+	// 삭제 버튼 이벤트 처리
+	$("#reply-delete-button").click(function() {
+	var rno = $("#rno-input2").val();
+	replyService.remove(rno, function() {
+	alert("댓글을 삭제하였습니다.");
+	$("#modify-reply-modal").modal('hide');
+	showList();
+	});
+	}); */
+</script>
+
+<title>~~~서울특별시 산 정보 웹사이트 입니다~~~</title>
 
 <style>/* css */
-h5 {
+h4 {
 	text-align: center;
 	text-size: 60pt;
 }
@@ -44,7 +209,7 @@ h5 {
 <body>
 	<m:topNav />
 	<div class="container mt-5 ">
-		<h5>글 보기</h5>
+		<h4>글 보기</h4>
 	</div>
 	<div class="container-sm">
 
@@ -102,15 +267,75 @@ h5 {
 
 				</form>
 
+			</div>
+		</div>
+
+	</div>
+	<!-- 댓글목록~~ -->
+
+	<div class="container-sm mt-3">
+		<div class="row">
+			<div class="col-12 col-lg-6 offset-lg-3">
+				<div class="card">
+					<div class="card-header">
+
+						<button id="new-freply-button" class="btn btn-outline-success "
+							style="float: right;" data-toggle="modal" data-target="#new-freply-modal" >댓글쓰기</button><!-- Button trigger modal 적용-->
+							
 
 
+					</div>
+					<div class="card-body">
+						<ul class="list-unstyled" id="freply-ul">
+						<!-- 내부에<li></li> list로 생성됨 -->
+
+						</ul>
+
+					</div>
+				</div>
 
 			</div>
-
-
 		</div>
 	</div>
+	
+	
+	
+		<%-- 새로운 댓글_modal --%>
+		
 
+
+<!-- Modal -->
+<div class="modal fade" id="new-freply-modal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel"> ${freeboard.user_nickname}님의 댓글 작성창</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+						<label for="freply-textarea" class="col-form-label">
+							댓글
+						</label>
+						<textarea id="freply-textarea" name="content" class="form-control" rows="10"></textarea>
+						
+						
+						    <div class="form-group">
+                <label for="replyer-textarea" hidden="hidden">댓글 작성자</label>
+                <textarea class="form-control" id="replyer-textarea" name="replyer-textarea" hidden="hidden">${freeboard.user_nickname}</textarea>
+            </div>
+					</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button id="freply-submit-button" type="button" class="btn btn-outline-success">등록</button>
+      </div>
+    </div>
+  </div>
+</div>
+		
 
 </body>
 </html>

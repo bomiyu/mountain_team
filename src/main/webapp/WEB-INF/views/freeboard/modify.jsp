@@ -33,7 +33,7 @@
 	});
 </script>
 
-<title>Insert title here</title>
+<title>~~~서울특별시 산 정보 웹사이트 입니다~~~</title>
 
 <style>/* css */
 h5 {

@@ -49,7 +49,7 @@
 
 					if (parseInt(result) > 0) {
 						$("#myModal .modal-body p").html(
-								"게시글 " + result + "번이 등록되었습니다.");
+								message + "닝의 새로운 글이 등록되었습니다.");
 					}
 					$("#myModal").modal("show");
 				}
@@ -69,7 +69,7 @@
 </script>
 <%-- <link rel="stylesheet" type="text/css"
 	href="${root }/resources/css/font.css"> --%>
-<title>자유게시판</title>
+<title>~~~서울특별시 산 정보 웹사이트 입니다~~~</title>
 
 
 
