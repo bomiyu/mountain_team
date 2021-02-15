@@ -1,4 +1,4 @@
 console.log("reply module!!!!!!!!!!!!!");
 
-var freplyService = {};
+var FReplyService = {};
 
