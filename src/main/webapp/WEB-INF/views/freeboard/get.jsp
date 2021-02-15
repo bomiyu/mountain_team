@@ -3,7 +3,7 @@
 <%@ taglib prefix="m" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%-- <%@ taglib prefix="u" tagdir="/WEB-INF/tags" %> --%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,17 +18,20 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://kit.fontawesome.com/a076d05399.js"></script>
-<script>
+<!-- <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+ -->
+<script type="text/javascript" src="/resources/js/freeboard/freereply.js"></script>
+
+ <script type="text/javascript">
 	var appRoot = '${root}';
-	var no = $
+	/* var no = $
 	{
 		FreeBoard.no
-	};
+	}; */
 </script>
-<script>
-	
-</script>
+
+
+
 <title>Insert title here</title>
 
 <style>/* css */
