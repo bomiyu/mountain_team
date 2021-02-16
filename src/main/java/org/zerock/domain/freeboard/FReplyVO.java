@@ -13,5 +13,5 @@ public class FReplyVO {
 	private String replyer;
 	private Date regdate;
 	private Date updateDate;
-
+	
 }

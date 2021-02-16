@@ -10,6 +10,9 @@
 <script>
 	var appRoot = '${root}';
 	var board_no = '${freeboard.no}';
+	var anick = '${authUser.nickname}';
+	var fnick ='${vo.replyer}';
+
 </script>
 <meta charset="UTF-8">
 <!-- MOBILE최적화 -->
@@ -74,10 +77,10 @@
 </script>
 
 <script>
+
 	$(document)
 			.ready(
 					function() {
-
 						// 날짜 형식
 						function dateString(date) {
 							var d = new Date(date);
@@ -98,7 +101,7 @@
 												replyUL.empty();
 												for (var i = 0; i < list.length; i++) {
 													var replyLI = '<li class="media" data-no="' 
-									+ list[i].no + '" ><div class="media-body"><h5 style="float: right;">'
+									+ list[i].no + '" ><div class="media-body"><h5 data-reply="'+list[i].replyer+'" style="float:right;">'
 															+ list[i].replyer
 															+ '&nbsp&nbsp&nbsp'
 															+ '<small class="float-right">'
@@ -106,95 +109,124 @@
 															+ "</small></h5>"
 															+ list[i].reply
 															+ "<hr></div></li>";
-
+															
 													replyUL.append(replyLI);
 												}
 											});
 						}
-					
 
-/* 	// 댓글쓰기 버튼 click이벤트 처리
-	$("#new-freply-button").click(function() { //댓글 쓰기 id가져옴
-		console.log("댓글쓰기버튼 동작????????");
-		$("#new-freply-modal").modal("show");
+						/* 	// 댓글쓰기 버튼 click이벤트 처리
+						 $("#new-freply-button").click(function() { //댓글 쓰기 id가져옴
+						 console.log("댓글쓰기버튼 동작????????");
+						 $("#new-freply-modal").modal("show");
 
-	}); */
+						 }); */
 
-	 //모달창_새로운 댓글_등록버튼 처리
-	$("#freply-submit-button").click(function() {
-		
-		
-	// textarea에서 value 가져와서 변수에 저장
-	var reply = $("#freply-textarea").val();
-	var replyer = $("#replyer-textarea").val();
-	console.log("reply:::::::::::::"+reply);
-	// ajax 요청을 위한 데이터 만들기
-	var data = {board_no: board_no, reply: reply, replyer: replyer};
-	
-	FReplyService.register(data,
-	function() {
-	// 댓글 목록 가져오기 실행
-	showList();
-	alert("${freeboard.user_nickname}"+"님의 댓글 등록에 성공하였습니다.");
-	},
-	function() {
-	alert("${freeboard.user_nickname}"+"님의댓글 등록에 실패하였습니다. 재시도 해주세요.")
-	});
-	
-	// 모달창 닫기
-	$("#new-freply-modal").modal("hide");
-	// 모달창 내의 textarea 요소들 value를 초기화
-	$("#new-freply-modal textarea").val("");
-	
-	
-	});
-	 
-	
-	
-	// 댓글 목록 가져오기 실행
-	showList();
+						//모달창_새로운 댓글_등록버튼 처리
+						$("#freply-submit-button")
+								.click(
+										function() {
 
-});
-	/* 	
-	
-	// reply-ul 클릭 이벤트 처리
-	$("#reply-ul").on("click", "li", function() {
-	// console.log("reply ul clicked......");
-	console.log($(this).attr("data-rno"));
-	
-	// 하나의 댓글 읽어오기
-	var rno = $(this).attr("data-rno");
-	replyService.get(rno, function(data) {
-	$("#rno-input2").val(rno);
-	$("#reply-input2").val(data.reply);
-	$("#replyer-input2").val(data.replyer);
-	$("#modify-reply-modal").modal('show');
-	});
-	
-	});
-	
-	// 수정 버튼 이벤트 처리
-	$("#reply-modify-button").click(function() {
-	var rno = $("#rno-input2").val();
-	var reply = $("#reply-input2").val();
-	var data = {rno:rno , reply: reply};
-	
-	replyService.update(data, function() {
-	alert("댓글을 수정하였습니다.");
-	$("#modify-reply-modal").modal('hide');
-	showList();
-	});
-	});
-	
-	// 삭제 버튼 이벤트 처리
-	$("#reply-delete-button").click(function() {
-	var rno = $("#rno-input2").val();
-	replyService.remove(rno, function() {
-	alert("댓글을 삭제하였습니다.");
-	$("#modify-reply-modal").modal('hide');
-	showList();
-	});
-	}); */
+											// textarea에서 value 가져와서 변수에 저장
+											var reply = $("#freply-textarea")
+													.val();
+											var replyer = $("#replyer-textarea")
+													.val();
+											console.log("reply:::::::::::::"
+													+ reply);
+											// ajax 요청을 위한 데이터 만들기
+											var data = {
+												board_no : board_no,
+												reply : reply,
+												replyer : replyer
+											};
+
+											FReplyService
+													.register(
+															data,
+															function() {
+																// 댓글 목록 가져오기 실행
+																showList();
+																alert("${authUser.nickname}"
+																		+ "님의 댓글 등록에 성공하였습니다.");
+															},
+															function() {
+																alert("${authUser.nickname}"
+																		+ "님의댓글 등록에 실패하였습니다. 재시도 해주세요.")
+															});
+
+											// 모달창 닫기
+											$("#new-freply-modal")
+													.modal("hide");
+											// 모달창 내의 textarea 요소들 value를 초기화
+											$("#new-freply-modal textarea")
+													.val("");
+
+										});
+
+						// freply-ul 클릭 이벤트 처리>  showList()에서 for문에서 li생성했던거!
+						
+							$("#freply-ul").on("click", "li", function() {
+								//alert(anick);
+								var reply_writer = $(this).find("h5").attr("data-reply"); // 댓글 작성자 닉네임
+								//alert("댓글의 작성자 닉네임은:"+reply_writer);
+								
+								if(anick == reply_writer){
+									console.log("freply ul 선택.");
+									
+									// 한개의 댓글  //수정 form의 modal-body의 data
+									var no = $(this).attr("data-no"); // 댓글 작성번호
+									FReplyService.get(no, function(data) {
+									$("#modify-no").val(no);
+									$("#modify-no-reply").val(data.reply);
+									$("#modify-no-replyer").val(data.replyer);
+									$("#modify-freply-modal").modal('show');
+								    });	
+								}
+							});
+							 
+						
+							/* // 한개의 댓글  //수정 form의 modal-body의 data
+							var no = $(this).attr("data-no");
+							FReplyService.get(no, function(data) {
+								$("#modify-no").val(no);
+								$("#modify-no-reply").val(data.reply);
+								$("#modify-no-replyer").val(data.replyer);
+								$("#modify-freply-modal").modal('show');
+							});*/
+							
+							
+							
+						// 수정 버튼 이벤트 처리
+						$("#freply-modify-button").click(function() {
+							var no = $("#modify-no").val();
+							var reply = $("#modify-no-reply").val();
+							var data = {
+								no : no,
+								reply : reply
+							};
+
+							FReplyService.update(data, function() {
+								alert("댓글을 수정하였습니다.");
+								$("#modify-freply-modal").modal('hide');
+								showList();
+							});
+						});
+
+						// 삭제 버튼 이벤트 처리
+						$("#freply-delete-button").click(function() {
+							var no = $("#modify-no").val();
+							FReplyService.remove(no, function() {
+								alert("댓글을 삭제하였습니다.");
+								$("#modify-freply-modal").modal('hide');
+								showList();
+							});
+						});
+
+						// 댓글 목록 가져오기 실행
+						showList();
+
+					});
 </script>
 
 <title>~~~서울특별시 산 정보 웹사이트 입니다~~~</title>
@@ -210,6 +242,7 @@ h4 {
 	<m:topNav />
 	<div class="container mt-5 ">
 		<h4>글 보기</h4>
+		<p>세션 닉네임 = ${authUser.nickname }</p>
 	</div>
 	<div class="container-sm">
 
@@ -278,16 +311,30 @@ h4 {
 			<div class="col-12 col-lg-6 offset-lg-3">
 				<div class="card">
 					<div class="card-header">
-
-						<button id="new-freply-button" class="btn btn-outline-success "
-							style="float: right;" data-toggle="modal" data-target="#new-freply-modal" >댓글쓰기</button><!-- Button trigger modal 적용-->
-							
-
+	<%-- 				<div>
+					${authUser.nickname }
+					</div>
+					<div>
+					${authUser }
+					</div>
+					<div>
+					${freeboard }
+					</div>
+					<div>
+					${freeboard.user_nickname } 
+					</div>--%>
+						<c:if test="${authUser.nickname != null}">
+							<button id="new-freply-button" class="btn btn-outline-success "
+								style="float: right;" data-toggle="modal"
+								data-target="#new-freply-modal">댓글쓰기</button>
+						</c:if>
+						<!-- Button trigger modal 적용-->
+						<div>댓글을 수정하려면 해당댓글을 선택하세요.</div> 
 
 					</div>
 					<div class="card-body">
 						<ul class="list-unstyled" id="freply-ul">
-						<!-- 내부에<li></li> list로 생성됨 -->
+							<!-- 내부에<li></li> list로 생성됨 -->
 
 						</ul>
 
@@ -297,45 +344,93 @@ h4 {
 			</div>
 		</div>
 	</div>
-	
-	
-	
-		<%-- 새로운 댓글_modal --%>
-		
 
 
-<!-- Modal -->
-<div class="modal fade" id="new-freply-modal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel"> ${freeboard.user_nickname}님의 댓글 작성창</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="form-group">
-						<label for="freply-textarea" class="col-form-label">
-							댓글
-						</label>
-						<textarea id="freply-textarea" name="content" class="form-control" rows="10"></textarea>
-						
-						
-						    <div class="form-group">
-                <label for="replyer-textarea" hidden="hidden">댓글 작성자</label>
-                <textarea class="form-control" id="replyer-textarea" name="replyer-textarea" hidden="hidden">${freeboard.user_nickname}</textarea>
-            </div>
+
+	<!-- 새로운 댓글_modal -->
+	<div class="modal fade" id="new-freply-modal" data-backdrop="static"
+		data-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">
+						${authUser.nickname}님의 댓글 작성창</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="freply-textarea" class="col-form-label"> 댓글 </label>
+						<textarea id="freply-textarea" name="content" class="form-control"
+							rows="10" required></textarea>
+
+
+						<div class="form-group">
+							<label for="replyer-textarea" hidden="hidden">댓글 작성자</label>
+							<textarea id="replyer-textarea" class="form-control"
+								name="replyer-textarea" hidden="hidden">${authUser.nickname}</textarea>
+						</div>
 					</div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button id="freply-submit-button" type="button" class="btn btn-outline-success">등록</button>
-      </div>
-    </div>
-  </div>
-</div>
-		
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">닫기</button>
+
+					<button id="freply-submit-button" type="button"
+						class="btn btn-outline-success">등록</button>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<!-- 수정 댓글_modal -->
+	<div class="modal fade" id="modify-freply-modal" data-backdrop="static"
+		data-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">
+						${authUser.nickname}님의 댓글 수정 /삭제</h5>
+
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<textarea id="modify-no" hidden="hidden"></textarea>
+						<label for="modify-no-reply" class="col-form-label"> 댓글 </label>
+						<textarea id="modify-no-reply" name="content" class="form-control"
+							rows="10"></textarea>
+
+
+						<div class="form-group">
+							<label for="modify-no-replyer" hidden="hidden">댓글 작성자</label>
+							<textarea id="modify-no-replyer" class="form-control"
+								name="replyer-textarea" hidden="hidden">${authUser.nickname}</textarea>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">취소</button>
+						<button id="freply-delete-button" type="button"
+							class="btn btn-outline-danger">삭제</button>
+						<button id="freply-modify-button" type="button"
+							class="btn btn-outline-success">완료</button>
+			
+				</div>
+			</div>
+		</div>
+	</div>
 
 </body>
 </html>

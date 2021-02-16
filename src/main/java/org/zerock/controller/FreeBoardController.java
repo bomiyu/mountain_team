@@ -53,7 +53,6 @@ public class FreeBoardController {
 		model.addAttribute("pageMaker", new FPageDTO(cri, total));
 		model.addAttribute("cnt", total);
 		
-//		model.addAttribute("usernick", User.getNickname());//jsp에서 받을 nick
 	}
 
 	@GetMapping("/register")
