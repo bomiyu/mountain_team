@@ -3,10 +3,11 @@
 <%@ taglib prefix="m" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%-- <%@ taglib prefix="u" tagdir="/WEB-INF/tags" %> --%>
 <!DOCTYPE html>
 <html>
 <head>
+
+<link rel="stylesheet" type="text/css" href="${root }/resources/css/font.css">
 <meta charset="UTF-8">
 <!-- MOBILE최적화 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,7 +34,7 @@
 	});
 </script>
 
-<title>~~~서울특별시 산 정보 웹사이트 입니다~~~</title>
+<title>산산산</title>
 
 <style>/* css */
 h5 {

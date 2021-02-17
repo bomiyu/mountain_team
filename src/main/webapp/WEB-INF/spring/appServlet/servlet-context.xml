@@ -23,6 +23,7 @@
 	
 	<context:component-scan base-package="org.zerock.controller" />
 	
-	
+	<!-- 이 타입의 빈을 서블릿에서 쓸 수 있게 변환, input file을 MultipartFile 객체로 변환 -->
+	<beans:bean id="multipartResulver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver" />
 	
 </beans:beans>

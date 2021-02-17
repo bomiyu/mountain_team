@@ -1,7 +1,5 @@
 package org.zerock.mapper;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +18,7 @@ public class MountainMapperTests {
 
 	@Setter(onMethod_ =@Autowired )
 	private MountainMapper mapper;
-/*
+
 	
 	@Test
 	public void testGetList() {
@@ -58,11 +56,11 @@ public class MountainMapperTests {
 	// 현재 테이블에 no값이 있는지 확인
 	@Test
 	public void testRead() {
-		MountainVO mountain = mapper.read(1L);
+		MountainVO mountain = mapper.read(61L);
 		
 		log.info(mountain);
 	}
-	*/
+	
 	@Test
 	public void testDelete() {
 		

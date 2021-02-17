@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.zerock.domain.notice.NCriteria;
 import org.zerock.domain.notice.NoticeVO;
 import org.zerock.service.notice.NoticeService;
 
@@ -24,7 +25,8 @@ public class NoticeServiceTests {
 	
 	@Test
 	public void testGetTotal() {
-		log.info(service.getTotal());
+		NCriteria cri = new NCriteria();
+		log.info(service.getTotal(cri));
 	}
 	
 	@Test
@@ -64,11 +66,12 @@ public class NoticeServiceTests {
 		
 		service.register(vo);
 		
-		int before = service.getTotal();
+		NCriteria cri = new NCriteria();
+		int before = service.getTotal(cri);
 		
-		service.delete(vo.getNo());
+		service.remove(vo.getNo());
 		
-		int after = service.getTotal();
+		int after = service.getTotal(cri);
 		
 		log.info("before: " + before + ", after: " + after);
 		assertEquals(before + 1, after);
@@ -77,7 +80,9 @@ public class NoticeServiceTests {
 	
 	@Test
 	public void testGetList() {
-		log.info(service.getList());
+		NCriteria cri = new NCriteria();
+		cri.setKeyword("title");
+		log.info(service.getList(cri));
 	}
 
 }

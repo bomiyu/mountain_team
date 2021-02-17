@@ -28,7 +28,7 @@ public class NReplyServiceTests {
 	
 	@Test
 	public void testGetTotal() {
-		log.info(service.getTotal());
+		log.info(service.getTotal(342L));
 	}
 	
 	@Test

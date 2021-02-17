@@ -9,6 +9,9 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
+	<bean id="ociConfigPath" class="java.lang.String">
+		<constructor-arg value="/home/opc/oci/config"></constructor-arg>
+	</bean>
 	
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">	
 	 	<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0 //EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="org.zerock.mapper.WishMapper">
+	
+	<!--#찜 등록-->
+	<insert id="insertSelectKey" >
+		<selectKey keyProperty="no" order="BEFORE" resultType="long">
+			SELECT seq_member.nextval FROM dual
+		</selectKey>
+		
+		INSERT INTO wish 
+		(no, member_no, mountain_no)
+		VALUES (#{no}, #{member_no}, #{mountain_no}) 
+	</insert>
+	
+	<!--#전체 찜 리스트  -->
+	<select id="getList" resultType="org.zerock.domain.wish.WishVO">
+		SELECT * FROM wish
+	</select>
+	
+	<!--#찜 리스트 - 산 -->
+	<select id="readWishMt" resultType="org.zerock.domain.wish.WishVO">
+		SELECT * FROM wish WHERE mountain_no = #{mountain_no}
+	</select>
+
+	<!--#찜 리스트 - 회원 -->
+	<select id="readWishMem" resultType="org.zerock.domain.wish.WishVO">
+		SELECT * FROM wish WHERE member_no = #{member_no}
+	</select>
+	
+	<!--#찜 삭제 -->
+	<delete id="delete">
+		DELETE FROM wish WHERE member_no = #{member_no} AND mountain_no = #{mountain_no} 
+	</delete>
+	
+	<!--#찜 개수 -->
+	<select id="wishSize" resultType="int">
+		SELECT count(*) FROM wish WHERE member_no = #{member_no} 
+	</select>
+	
+	
+	</mapper>

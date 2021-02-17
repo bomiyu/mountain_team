@@ -8,6 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="${root }/resources/css/font.css">
 <!-- MOBILE최적화 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -69,7 +70,7 @@
 </script>
 <%-- <link rel="stylesheet" type="text/css"
 	href="${root }/resources/css/font.css"> --%>
-<title>~~~서울특별시 산 정보 웹사이트 입니다~~~</title>
+<title>산산산</title>
 
 
 

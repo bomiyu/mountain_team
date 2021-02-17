@@ -7,7 +7,7 @@ import org.zerock.domain.notice.NoticeVO;
 
 public interface NoticeMapper {
 
-	public int getTotalCount();
+	public int getTotalCount(NCriteria cri);
 	
 	public void insertSelectKey(NoticeVO vo);
 	

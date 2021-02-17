@@ -7,7 +7,8 @@ public class NCriteria {
 	private int curPage;
 	private int amount;
 	
-	private String keyword;
+	private String category;// notice | event
+	private String keyword;// title, content
 	
 	public NCriteria() {
 		this(1, 10);

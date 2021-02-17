@@ -48,8 +48,17 @@ public class MemberServiceTests {
 	
 	//회원 정보 읽기 - 아이디 
 	@Test
-	public void testGetMember() {
-		MemberVO member = service.getMember("hi");
+	public void testGetMemberId() {
+		MemberVO member = service.getMemberId("coco");
+		
+		log.info(member);
+		
+	}
+
+	//회원 정보 읽기 - 닉네임 
+	@Test
+	public void testGetMemberNn() {
+		MemberVO member = service.getMemberNn("1");
 		
 		log.info(member);
 		

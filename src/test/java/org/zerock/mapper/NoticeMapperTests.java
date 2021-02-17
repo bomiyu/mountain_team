@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.zerock.domain.notice.NCriteria;
 import org.zerock.domain.notice.NoticeVO;
 
 import lombok.Setter;
@@ -23,7 +24,8 @@ public class NoticeMapperTests {
 	
 	@Test
 	public void testGetTotalCount() {
-		int cnt = mapper.getTotalCount();
+		NCriteria cri = new NCriteria();
+		int cnt = mapper.getTotalCount(cri);
 		log.info(cnt);
 	}
 	
@@ -87,7 +89,10 @@ public class NoticeMapperTests {
 	
 	@Test
 	public void testGetList() {
-		log.info(mapper.getList());
+		NCriteria cri = new NCriteria();
+		cri.setCategory("notice");
+		//cri.setKeyword("~");
+		log.info(mapper.getListWithPaging(cri));
 	}
 
 }

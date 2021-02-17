@@ -15,6 +15,7 @@ public class NoticeVO {
 	private Date regdate;// default sysdate
 	private int cnt;// default 0
 	private long member_no;
+	private int reply;// can reply (0, 1)
 	private String nickname;// 추가 view: noticeInfo
 
 	public String getJson() {// java object -> json

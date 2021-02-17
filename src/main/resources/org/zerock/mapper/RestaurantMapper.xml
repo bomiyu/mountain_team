@@ -31,7 +31,7 @@ SELECT no FROM mountain WHERE mname LIKE '%' || #{mname} || '%'
 <select id="getListPaging" resultType="org.zerock.domain.restaurant.RestaurantVO">
 <![CDATA[SELECT no, mountain_no, rname, rloc, contact, menu, description, likecnt, dislikecnt, mname
 FROM
-(SELECT ROW_NUMBER() OVER (ORDER BY no DESC) rn, no, mountain_no, rname, rloc, contact, menu, description, 
+(SELECT ROW_NUMBER() OVER (ORDER BY no DESC) rn, no, mountain_no, rname, rloc, contact, menu, description,
 likecnt, dislikecnt, mname FROM res_view
 ]]>
 	 <include refid="criteria"></include>
@@ -70,7 +70,7 @@ WHERE no = #{no}
 </select>
 
 <select id="getTotalCnt" resultType="int">
-	SELECT count(*) FROM restaurant <include refid="criteria"></include>
+	SELECT count(*) FROM res_view <include refid="criteria"></include>
 </select>
 
 </mapper>

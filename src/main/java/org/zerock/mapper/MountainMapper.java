@@ -20,5 +20,7 @@ public interface MountainMapper {
 	public List<MountainVO> getListWithPaging(Criteria cri);
 
 	public MountainVO read(Long no);
+
+	
 	
 }

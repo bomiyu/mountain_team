@@ -2,19 +2,19 @@ package org.zerock.service.nreply;
 
 import java.util.List;
 
-import org.zerock.domain.notice.NReplyVO;
+import org.zerock.domain.nreply.NReplyVO;
 
 public interface NReplyService {
 	
-	public int getTotal();
+	public int getTotal(Long notice_no);
 	
-	public void register(NReplyVO reply);
+	public int register(NReplyVO reply);
 	
-	public NReplyVO get(Long no);
+	public NReplyVO get(Long no);// 필요?
 	
 	public boolean modify(NReplyVO reply);
 	
-	public boolean delete(Long no);
+	public boolean remove(Long no);
 	
-	public List<NReplyVO> getList();
+	public List<NReplyVO> getList(Long notice_no);
 }

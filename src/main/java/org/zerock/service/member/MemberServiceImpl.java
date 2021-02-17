@@ -20,13 +20,19 @@ public class MemberServiceImpl implements MemberService {
 		mapper.insertSelectKey(member);
 	}
 	
-	//회원 정보 읽기 - 아이디
+	//##회원 정보 읽기 - 아이디
 	@Override
-	public MemberVO getMember(String id) {
-		return mapper.readMember(id);
+	public MemberVO getMemberId(String id) {
+		return mapper.readMemberId(id);
+	}
+
+	//##회원 정보 읽기 - 닉네임
+	@Override
+	public MemberVO getMemberNn(String nn) {
+		return mapper.readMemberNn(nn);
 	}
 	
-	//회원 정보 읽기 - no
+	//##회원 정보 읽기 - no
 	//나중에도 사용하지않으면 지울 수 있음!
 	//사용할 시 사용 여부 표시바람
 	@Override
@@ -34,20 +40,20 @@ public class MemberServiceImpl implements MemberService {
 		return mapper.read(no);
 	}
 	
-	//회원 정보 수정
+	//##회원 정보 수정
 	@Override
 	public boolean modify(MemberVO member) {
 		return mapper.update(member) == 1;
 	}
 
-	//회원 탈퇴(삭제)
+	//##회원 탈퇴(삭제)
 	@Override
 	public boolean remove(String id) {
 		return mapper.delete(id) == 1;
 	}
 	
 	
-	//회원 정보 체크
+	//##회원 정보 체크
 	@Override
 	public boolean checkMember(String memA, String memB) {
 			return memA.equals(memB);

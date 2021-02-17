@@ -7,7 +7,7 @@ import org.zerock.domain.notice.NoticeVO;
 
 public interface NoticeService {
 
-	public int getTotal();
+	public int getTotal(NCriteria cri);
 	
 	public void register(NoticeVO notice);
 	
@@ -19,7 +19,7 @@ public interface NoticeService {
 	
 	public boolean modify(NoticeVO notice);
 	
-	public boolean delete(Long no);
+	public boolean remove(Long no);
 	
 	public List<NoticeVO> getList();
 

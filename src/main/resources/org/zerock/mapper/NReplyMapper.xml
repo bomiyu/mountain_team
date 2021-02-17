@@ -4,22 +4,20 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.zerock.mapper.NReplyMapper"> <!-- interface -->
 	<select id="getTotalCount" resultType="int">
-	<![CDATA[
 		SELECT count(*) FROM nreply
-		WHERE no > 0 
-	]]>
+		WHERE notice_no = #{notice_no} 
 	</select>
 	
 	<insert id="insertSelectKey">
 		<selectKey keyProperty="no" order="BEFORE" resultType="long">
 			SELECT seq_nreply.nextval FROM dual
 		</selectKey>
-		INSERT INTO nreply (no, reply, replyer, notice_no)
-		VALUES (#{no}, #{reply}, #{replyer}, #{notice_no})
+		INSERT INTO nreply (no, reply, notice_no, member_no)
+		VALUES (#{no}, #{reply}, #{notice_no}, #{member_no})
 	</insert>
 	
-	<select id="read" resultType="org.zerock.domain.notice.NReplyVO">
-		SELECT * FROM nreply WHERE no = #{no}
+	<select id="read" resultType="org.zerock.domain.nreply.NReplyVO">
+		SELECT * FROM nreplyInfo WHERE no = #{no}
 	</select>
 	
 	<update id="update">
@@ -32,10 +30,10 @@
 		DELETE nreply WHERE no = #{no}
 	</delete>
 	
-	<select id="getList" resultType="org.zerock.domain.notice.NReplyVO">
+	<select id="getList" resultType="org.zerock.domain.nreply.NReplyVO">
 	<![CDATA[
-		SELECT * FROM nreply
-		WHERE no > 0
+		SELECT * FROM nreplyInfo
+		WHERE notice_no = #{notice_no}
 		ORDER BY no DESC
 	]]>
 	</select>

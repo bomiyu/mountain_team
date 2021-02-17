@@ -1,5 +1,6 @@
 package org.zerock.domain.restaurant;
 
+
 import org.springframework.stereotype.Service;
 
 import lombok.Data;
@@ -9,6 +10,5 @@ import lombok.Getter;
 public class AddressVO {
 	private String address1;
 	private String address2;
-	private String address3;
 
 }
