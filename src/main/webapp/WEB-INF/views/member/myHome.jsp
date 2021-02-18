@@ -16,6 +16,8 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+
 <script>
 	$(document).ready(function() {
 
@@ -79,6 +81,66 @@
 </script>
 
 <title>Insert title here</title>
+
+<style>
+/* 산정복 효과 */
+figure {
+	width: 100%;
+ 	position: relative;
+}
+
+figure img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+figure h4 { /* 사진 위에 뜨는 텍스트공간  */
+	position: absolute;
+	top: calc(100% - 50px);
+	left: 0;
+	width: 100%;
+	height: 50px;
+	color: #fff;
+	background: rgba(11, 156, 49, 0.6); /*  그린rgba */
+	margin: 0;
+}
+
+figure .overlay {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	overflow: hidden;
+	width: 100%;
+	height: 0;
+	color: white;
+	background: rgba(11, 156, 49, 0.6); /*  그린rgba */
+	-webkit-transition: .6s ease;
+	transition: .6s ease;
+}
+
+figure .overlay .description {
+	font-size: 20px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	text-align: center;
+}
+
+figure:hover h4 {
+	display: none;
+}
+
+figure:hover .overlay {
+	display: block;
+	height: 100%;
+}
+</style>
+
 </head>
 <body>
 	<m:topNav />
@@ -216,11 +278,56 @@
 	<!-- 정복 산 리스트 -->
 	<p class="addConquest">
 	<div class="container">
-		<div class="row">
-			<aside class="col-md-4 col-lg-4 col-sm-4">
+		<div class="row d-flex flex-row justify-content-center">
+			<!-- row 방향으로 가로 배열할 때, 중앙 정렬  -->
 
+			<div>
 				<figure>
-						 <img src="/resources/img/conquest/bughansan.png"
+					<img src="${root }/resources/img/conquest/bughansan.png"
+						class="img-responsive img-rounded" />
+					<h4>북한산 도장깨기</h4>
+					<div class="overlay">
+						<div class="description">스티커이미지 추가추가추가~</div>
+					</div>
+				</figure>
+
+			</div>
+			<div>
+				<figure>
+					<img src="${root }/resources/img/conquest/dobongsan.png"
+						class="img-responsive img-rounded" />
+					<h4>도봉산 도장깨기</h4>
+					<div class="overlay">
+						<div class="description">스티커이미지 추가추가추가~</div>
+					</div>
+				</figure>
+
+			</div>
+			<div>
+				<figure>
+					<img src="${root }/resources/img/conquest/sulagsan.png"
+						class="img-responsive img-rounded" />
+					<h4>수락산 도장깨기</h4>
+					<div class="overlay">
+						<div class="description">스티커이미지 추가추가추가~</div>
+					</div>
+				</figure>
+
+			</div>
+			<div>
+				<figure>
+					<img src="${root }/resources/img/conquest/in-wangsan.png"
+						class="img-responsive img-rounded" />
+					<h4>인왕산 도장깨기</h4>
+					<div class="overlay">
+						<div class="description">스티커이미지 추가추가추가~</div>
+					</div>
+				</figure>
+
+			</div>
+			<div>
+				<figure>
+					<img src="${root }/resources/img/conquest/achasan.png"
 						class="img-responsive img-rounded" />
 					<h4>아차산 도장깨기</h4>
 					<div class="overlay">
@@ -228,8 +335,21 @@
 					</div>
 				</figure>
 
-			</aside>
+			</div>
+			<div>
+				<figure>
+					<img src="${root }/resources/img/conquest/gwan-agsan.png"
+						class="img-responsive img-rounded" />
+					<h4>관악산 도장깨기</h4>
+					<div class="overlay">
+						<div class="description">스티커이미지 추가추가추가~</div>
+					</div>
+				</figure>
+
+			</div>
+
 		</div>
+
 	</div>
 
 
