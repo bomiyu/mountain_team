@@ -20,7 +20,7 @@ public class ConquestController {
 
 	private ConquestService service;
 
-	// 카트 담기
+	// 산 정복 담기
 	@ResponseBody //jsp에서 Ajax 사용하기위해 씀
 	@RequestMapping(value = "/addConquest", method = RequestMethod.POST)
 	public void addConquest(ConquestVO cvo, HttpSession session) throws Exception {

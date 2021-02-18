@@ -244,7 +244,6 @@ h4 {
 	<m:topNav />
 	<div class="container mt-5 ">
 		<h4>글 보기</h4>
-		<p>세션 닉네임 = ${authUser.nickname }</p>
 	</div>
 	<div class="container-sm">
 
