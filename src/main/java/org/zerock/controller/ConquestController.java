@@ -22,7 +22,7 @@ public class ConquestController {
 
 	// 산 정복 담기
 	@ResponseBody //jsp에서 Ajax 사용하기위해 씀
-	@RequestMapping(value = "/addConquest", method = RequestMethod.POST)
+	@RequestMapping(value = "/myHome", method = RequestMethod.POST)
 	public void addConquest(ConquestVO cvo, HttpSession session) throws Exception {
 
 		ConquestVO User = (ConquestVO) session.getAttribute("authUser");

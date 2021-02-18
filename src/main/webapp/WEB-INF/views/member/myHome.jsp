@@ -80,13 +80,51 @@
 	});
 </script>
 
+
+<script>
+	function Count(type, ths) {
+		var $input = $(ths).parents("td").find("input[name='conquestcnt']");// name을 찾아 $input에 넣음
+		var CCCount = Number($input.val()); //Number타입변환
+		var MCount = Number($(ths).parents("tr").find("td.maxconquest").html());//maxconquest찾음
+
+		if (type == 'p') { //plus약자
+			if (CCCount < MCount)
+				$input.val(Number(CCCount) + 1);// MAX값보다 작을때 +
+
+		} else {
+			if (CCCount > 0)
+				$input.val(Number(CCCount) - 1); //입력값이 0이상일경우에 -
+		}
+	}
+
+	/*1번  
+	function bughansan_info() {
+	 var mountain_no = "<c:out value='${mountain_no}'/>";
+	 console.log(mountain_no);
+	 var img_src;
+	 if(mountain_no == 291) {
+	 img_src="${root }/resources/img/conquest/mountain_black.png";
+	 }
+	 return img_src;
+	 }
+	
+
+	 function dobongsan_info() {
+	 var mountain_no = "<c:out value='${mountain_no}'/>";
+	 if(mountain_no == 740) {
+	 img_src = "${root }/resources/img/conquest/mountain_blue.png";
+	 }
+	 return img_src;
+	 } */
+</script>
+
 <title>Insert title here</title>
 
 <style>
 /* 산정복 효과 */
 figure {
 	width: 100%;
- 	position: relative;
+	position: relative;
 }
 
 figure img {
@@ -276,7 +314,7 @@ figure:hover .overlay {
 	</div>
 
 	<!-- 정복 산 리스트 -->
-	<p class="addConquest">
+
 	<div class="container">
 		<div class="row d-flex flex-row justify-content-center">
 			<!-- row 방향으로 가로 배열할 때, 중앙 정렬  -->
@@ -286,23 +324,64 @@ figure:hover .overlay {
 					<img src="${root }/resources/img/conquest/bughansan.png"
 						class="img-responsive img-rounded" />
 					<h4>북한산 도장깨기</h4>
+
 					<div class="overlay">
-						<div class="description">스티커이미지 추가추가추가~</div>
+						<div class="description">
+							<!-- 	스티커이미지 추가추가추가~ -->
+							<!-- 		<button name="conquest_btn" type="button" id="addConquest_btn1"
+								class="btn btn-outline-success">정복한 산!!</button> -->
+							<form action='<c:url value="testPage/insert_data" />'
+								method="post" id="insert_data">
+								<table>
+
+									<tr>
+										<td hidden="hidden">정복최대횟수</td>
+										<td class="maxconquest" hidden="hidden">10000000</td>
+										<td>
+											<button type="button" onclick="Count('p',this);"
+												class="btn btn-outline-success" type="submit">정복!!!!</button>
+											<input type="text" name="conquestcnt" value="0"
+											readonly="readonly" style="text-align: center;" />
+											<button type="button" onclick="Count('m', this);"
+												class="btn btn-outline-success" type="submit">잘못눌렀네,,</button>
+										</td>
+									</tr>
+								</table>
+
+
+							</form>
+							<%-- 		초반 script사용소스	 <img id="bughansan"
+								src="${root }/resources/img/conquest/mountain_black.png">
+							<script>
+									document.getElementById('bughansan').src = bughansan_info()
+								</script>  --%>
+						</div>
 					</div>
 				</figure>
 
 			</div>
+
+
 			<div>
 				<figure>
 					<img src="${root }/resources/img/conquest/dobongsan.png"
 						class="img-responsive img-rounded" />
 					<h4>도봉산 도장깨기</h4>
 					<div class="overlay">
-						<div class="description">스티커이미지 추가추가추가~</div>
-					</div>
-				</figure>
+						<div class="description">
+							스티커이미지 추가추가추가~
+							<%--스크립트로 표현하는경우<img id="title" src="">
+							<script>
+								document.getElementById('title').src = title_info()
+							</script>--%>
 
+						</div>
+
+					</div>
+
+				</figure>
 			</div>
+
 			<div>
 				<figure>
 					<img src="${root }/resources/img/conquest/sulagsan.png"
@@ -350,38 +429,40 @@ figure:hover .overlay {
 
 		</div>
 
+
 	</div>
+	<!-- <p class="addConquest">
+	
 
+		<script>
+			$(".addConquest_btn").click(function() {
+				var member_no = $("#member_no").val();
+				var conquestcnt = $(".numBox").val();
 
+				var data = {
+					mountain_no : mountain_no,//산번호
+					conquestcnt : conquestcnt //담은갯수 
+				};
 
-	<script>
-		$(".addCart_btn").click(function() {
-			var gdsNum = $("#gdsNum").val();
-			var cartStock = $(".numBox").val();
-
-			var data = {
-				gdsNum : gdsNum,
-				cartStock : cartStock
-			};
-
-			$.ajax({
-				url : "/shop/view/addCart",
-				type : "post",
-				data : data,
-				success : function(result) {
-					alert("카트 담기 성공");
-					$(".numBox").val("1");
-				},
-				error : function() {
-					alert("카트 담기 실패");
-				}
+				$.ajax({
+					url : "/conquest/view/addConquest",
+					type : "post",
+					data : data,
+					success : function(result) {
+						alert("담기 성공");
+						$(".numBox").val("1");
+					},
+					error : function() {
+						alert("카트 담기 실패");
+					}
+				});
 			});
-		});
-	</script>
-	</p>
-
-
-
+		</script>
+	</p> -->
+	<!-- 
+	private Long no; private Long member_no; //회원번호(pk) private int
+	conquestcnt; //추가됨 -> 산별 정복 카운트 private int mountain_no;//산 번호(pk)
+	private Date condate; // (==regdate ) 점령날짜 현재날짜 -->
 
 </body>
 </html>
