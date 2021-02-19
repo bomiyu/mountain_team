@@ -1,6 +1,7 @@
 package org.zerock.service.conquest;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.zerock.domain.conquest.ConquestVO;
 import org.zerock.mapper.ConquestMapper;
 
@@ -16,16 +17,22 @@ public class ConquestServiceImpl implements ConquestService {
 	private ConquestMapper mapper;
 
 	@Override
-	public void addConquest(ConquestVO cvo) {
+	@Transactional
+	public int addConquest(ConquestVO cvo) {
 		mapper.addConquest(cvo);
+		return mapper.addConquest(cvo);
 	}
+	
+	  
+	/*
+	 * @Override public int getConquestCount() { return mapper.getConquestCount(); }
+	 */
 	/*
 	 * @Override public List<ConquestVO> getList() { return mapper.getList(); }
 	 * 
 	 * @Override public List<ConquestVO> getList(Ccriteria cri) { // paging처리 return
 	 * mapper.getListWithPaging(cri); }
-	 * 
-	 * @Override public ConquestVO getConquest(Long no) { return mapper.get(no); }
+	
 	 * 
 	 * @Override public boolean deleteConquest(Long no) { return mapper.delete(no)
 	 * == 1; }

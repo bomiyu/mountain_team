@@ -4,7 +4,7 @@ import org.zerock.domain.conquest.ConquestVO;
 
 public interface ConquestService {
 
-	public void addConquest(ConquestVO cvo); //카트담기 
+	public int addConquest(ConquestVO cvo); //정복산 
 	
 //	public int getConquestCount(); // SELECT count(*) FROM Conquest
 

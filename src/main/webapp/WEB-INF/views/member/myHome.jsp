@@ -19,6 +19,7 @@
 
 
 <script>
+	var appRoot = '${root}';
 	$(document).ready(function() {
 
 		function hideSpans() {
@@ -82,6 +83,47 @@
 
 
 <script>
+	var FReplyService = (function() {
+
+		function addConquest(conquest, callback, error) {
+			console.log(JSON.stringify(conquest));
+			console.log(conquest);
+
+			$.ajax({
+				type : "post",
+				url : appRoot + "/Conquest/addConquest", // 컨트롤러 매핑
+				data : conquest, // form data를 json
+
+				success : function(result, stauts, xhr) {
+					if (callback) {
+						callback(result);
+					}
+				},
+				error : function(xhr, status, er) {
+					if (error) {
+						error(er);
+					}
+
+				}
+			});
+		}
+
+		return {
+			addConquest : addConquest
+		};
+	})();
+
+	/* 스티커표기해주기 */
+	$(document).ready(function() {
+		//$("#addConquest").serializeArray();
+		$("#btn-1").click(function(e) {
+			e.preventDefault();
+			FReplyService.addConquest($("#addConquest").serialize());
+		});
+
+	});
+
+	/* 정복산 count */
 	function Count(type, ths) {
 		var $input = $(ths).parents("td").find("input[name='conquestcnt']");// name을 찾아 $input에 넣음
 		var CCCount = Number($input.val()); //Number타입변환
@@ -97,7 +139,7 @@
 		}
 	}
 
-	/*1번  
+	/*1번  작업실패
 	function bughansan_info() {
 	 var mountain_no = "<c:out value='${mountain_no}'/>";
 	 console.log(mountain_no);
@@ -118,7 +160,7 @@
 	 } */
 </script>
 
-<title>Insert title here</title>
+<title>산산산</title>
 
 <style>
 /* 산정복 효과 */
@@ -330,24 +372,35 @@ figure:hover .overlay {
 							<!-- 	스티커이미지 추가추가추가~ -->
 							<!-- 		<button name="conquest_btn" type="button" id="addConquest_btn1"
 								class="btn btn-outline-success">정복한 산!!</button> -->
-							<form action='<c:url value="testPage/insert_data" />'
-								method="post" id="insert_data">
+							<form action='<c:url value="Conquest/addConquest" />'
+								method="post" id="addConquest">
 								<table>
 
 									<tr>
 										<td hidden="hidden">정복최대횟수</td>
-										<td class="maxconquest" hidden="hidden">10000000</td>
-										<td>
-											<button type="button" onclick="Count('p',this);"
-												class="btn btn-outline-success" type="submit">정복!!!!</button>
-											<input type="text" name="conquestcnt" value="0"
-											readonly="readonly" style="text-align: center;" />
-											<button type="button" onclick="Count('m', this);"
-												class="btn btn-outline-success" type="submit">잘못눌렀네,,</button>
-										</td>
+										<td class="maxconquest" hidden="hidden">1000</td>
+										<td><input hidden="hidden" name="member_no"
+											value="${authUser.no }"></input> <input hidden="hidden"
+											name="mountain_no" value="291"></input>
+											<button id="btn-1" name="conquestcnt" type="button"
+												onclick="Count('p',this);" class="btn btn-outline-success"
+												type="submit">정복!!!!</button> <input type="text"
+											name="conquestcnt" value="0" readonly="readonly"
+											style="text-align: center;" />
+											<button name="conquestcnt" type="button"
+												onclick="Count('m', this);" class="btn btn-outline-success"
+												type="submit">잘못눌렀네,,</button></td>
 									</tr>
 								</table>
 
+
+								<!-- <!-- 1.북한산 291
+2. 도봉산 740
+3. 수락산 44
+4. 인왕산 294
+5. 아차산 297
+6. 관악산 61 -->
+								-->
 
 							</form>
 							<%-- 		초반 script사용소스	 <img id="bughansan"
