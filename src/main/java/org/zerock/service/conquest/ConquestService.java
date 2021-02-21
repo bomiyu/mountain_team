@@ -1,19 +1,20 @@
 package org.zerock.service.conquest;
 
+import java.util.List;
+
 import org.zerock.domain.conquest.ConquestVO;
+import org.zerock.domain.mountain.ConqStickerVO;
+import org.zerock.domain.mountain.MnameVO;
 
 public interface ConquestService {
 
 	public int addConquest(ConquestVO cvo); //정복산 
+	public boolean updateConquest(ConquestVO cvo);
+
+	// for CONQUEST table
+	public List<MnameVO> getMnameList();
 	
-//	public int getConquestCount(); // SELECT count(*) FROM Conquest
+	public List<ConqStickerVO> getConqListbyMem(Long user_no);
 
-//	public List<ConquestVO> getList();
-//
-//	public ConquestVO getConquest(Long no);
-//
-//	public boolean deleteConquest(Long no); 
-//
-//	public boolean updateConquest(ConquestVO vo);
-
+	public int checkCnt();
 }

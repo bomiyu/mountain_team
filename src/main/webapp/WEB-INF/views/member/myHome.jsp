@@ -20,27 +20,23 @@
 
 <script>
 	var appRoot = '${root}';
+	var conquestcnt = '${conq.conquestcnt}';
 	$(document).ready(function() {
-
 		function hideSpans() {
 			$('#pwError').hide();
 			$('#pwNull').hide();
 		}
-
 		hideSpans();
-
 		$("#memberDeleteCancel1").click(function() {
 			$('#pwConfirm').val('');
 			$('#pwError').hide();
 			$('#pwNull').hide();
 		});
-
 		$("#memberDeleteCancel2").click(function() {
 			$('#pwConfirm').val('');
 			$('#pwError').hide();
 			$('#pwNull').hide();
 		});
-
 		$("#memberDelete").click(function() {
 			$('#pwError').hide();
 			$('#pwNull').hide();
@@ -49,7 +45,6 @@
 			var userId = $(this).attr("data-userId"); //attribute 값
 			var pwConfirm = $('#pwConfirm').val(); //value값
 			//변수에 원하는 값을 넣어준다.
-
 			$.ajax("/mountain/member/delete?" + $.param({
 				userId : userId,
 				pwConfirm : pwConfirm
@@ -58,7 +53,6 @@
 			//data:{id: userId, pw:pwConfirm}로 보내줬을때 읽어오질 못함
 			//=> delete 방식으로 보냈을때, delete는 body가 없기 때문에 요청이 오류, 거절이 일어날 수 있다.
 			//=> 해결 : 파라미터로 값을 붙여서 보내주자!
-
 			}).fail(function() {
 				console.log("삭제 실패");
 				if ($('#pwConfirm').val() == '') {
@@ -66,7 +60,6 @@
 				} else {
 					$('#pwError').show(); //비밀번호가 일치하지 않습니다.
 				}
-
 			}).done(function() {
 				console.log("삭제 완료");
 				//	$('#errorPw').show(); // 왜 삭제 완료에서 뜨는거야?????!!
@@ -74,26 +67,23 @@
 				//	컨트롤러에서 페이지 상태를 받아야함. 리턴타입 : ResponseEntity<String>
 				$("#memberDeleteModal").modal('hide');
 				$("#memberDeleteSuccessModal").modal('show');
-
 			});
 		});
-
 	});
 </script>
 
 
 <script>
-	var FReplyService = (function() {
 
-		function addConquest(conquest, callback, error) {
-			console.log(JSON.stringify(conquest));
-			console.log(conquest);
-
+/*insert*/
+	var ConquestService = (function() {
+		function addConquest(data, callback, error) {
+			console.log(JSON.stringify(data));
+			console.log(data);
 			$.ajax({
 				type : "post",
 				url : appRoot + "/Conquest/addConquest", // 컨트롤러 매핑
-				data : conquest, // form data를 json
-
+				data : data, // form data를 json
 				success : function(result, stauts, xhr) {
 					if (callback) {
 						callback(result);
@@ -103,42 +93,74 @@
 					if (error) {
 						error(er);
 					}
-
 				}
 			});
 		}
-
 		return {
 			addConquest : addConquest
 		};
 	})();
-
-	/* 스티커표기해주기 */
+	/* 카운트 ajax로 데이터 보내기 */
 	$(document).ready(function() {
 		//$("#addConquest").serializeArray();
-		$("#btn-1").click(function(e) {
+		$("#add-btn").click(function(e) {
 			e.preventDefault();
-			FReplyService.addConquest($("#addConquest").serialize());
+			ConquestService.addConquest($("#addConquest").serialize());
 		});
-
 	});
 
+	
+	/*update*/
+
+		function updateConquest(data, callback, error) {
+			console.log(JSON.stringify(data));
+			console.log(data);
+			
+			$.ajax({
+				type : "post",
+				url : (conquestcnt == 0) ? appRoot + "/Conquest/addConquest" : appRoot + "/Conquest/updateConquest", // 컨트롤러 매핑
+				contentType: "application/json",// 이 타입으로 data를 보내겠다 컨트롤러에
+				data : (conquestcnt == 0) ? {"member_no": member_no,"mountain_no":mountain_no, "conquestcnt":conquestcnt} : {"conquestcnt": conquestcnt}, // form data를 json
+				success : function(result, stauts, xhr) {
+					if (callback) {
+						callback(result);
+					}
+				},
+				error : function(xhr, status, er) {
+					if (error) {
+						error(er);
+					}
+				}
+			});
+		}
+	
+
+	/* 카운트 ajax로 데이터 보내기 */
+	$(document).ready(function() {
+		//$("#addConquest").serializeArray();
+		$("#up-btn").click(function(e) {
+			e.preventDefault();
+			ConquestService.updateConquest($("#updateConquest").serialize());
+		});
+	});
+	
+	
 	/* 정복산 count */
 	function Count(type, ths) {
-		var $input = $(ths).parents("td").find("input[name='conquestcnt']");// name을 찾아 $input에 넣음
+		var $input = $(ths).parents("td").find("input[name='plusminus']");// name을 찾아 $input에 넣음
 		var CCCount = Number($input.val()); //Number타입변환
 		var MCount = Number($(ths).parents("tr").find("td.maxconquest").html());//maxconquest찾음
-
 		if (type == 'p') { //plus약자
 			if (CCCount < MCount)
 				$input.val(Number(CCCount) + 1);// MAX값보다 작을때 +
-
 		} else {
 			if (CCCount > 0)
 				$input.val(Number(CCCount) - 1); //입력값이 0이상일경우에 -
 		}
 	}
-
+	
+	
+	
 	/*1번  작업실패
 	function bughansan_info() {
 	 var mountain_no = "<c:out value='${mountain_no}'/>";
@@ -150,7 +172,6 @@
 	 return img_src;
 	 }
 	
-
 	 function dobongsan_info() {
 	 var mountain_no = "<c:out value='${mountain_no}'/>";
 	 if(mountain_no == 740) {
@@ -168,13 +189,11 @@ figure {
 	width: 100%;
 	position: relative;
 }
-
 figure img {
 	display: block;
 	width: 100%;
 	height: auto;
 }
-
 figure h4 { /* 사진 위에 뜨는 텍스트공간  */
 	position: absolute;
 	top: calc(100% - 50px);
@@ -185,7 +204,6 @@ figure h4 { /* 사진 위에 뜨는 텍스트공간  */
 	background: rgba(11, 156, 49, 0.6); /*  그린rgba */
 	margin: 0;
 }
-
 figure .overlay {
 	position: absolute;
 	bottom: 0;
@@ -199,7 +217,6 @@ figure .overlay {
 	-webkit-transition: .6s ease;
 	transition: .6s ease;
 }
-
 figure .overlay .description {
 	font-size: 20px;
 	position: absolute;
@@ -210,11 +227,9 @@ figure .overlay .description {
 	transform: translate(-50%, -50%);
 	text-align: center;
 }
-
 figure:hover h4 {
 	display: none;
 }
-
 figure:hover .overlay {
 	display: block;
 	height: 100%;
@@ -356,7 +371,81 @@ figure:hover .overlay {
 	</div>
 
 	<!-- 정복 산 리스트 -->
+	<p>카운트확인!!!!!!!${list.conquestcnt }</p>
+	
+	<form action='<c:url value="Conquest/updateConquest" />'method="post" id="updateConquest">
+								<input hidden="hidden" name="conquestcnt" value="${list.conquestcnt }"></input>
+								<button id="up-btn" type="submit"> update </button>
+							</form><!-- test용버튼  -->
+	
 
+	<!-- row 방향으로 가로 배열할 때, 중앙 정렬  -->
+	
+	
+		<div class="container">
+	<div class="row d-flex flex-row justify-content-center">
+			
+		<c:forEach items="${list }" var="conq">
+	<div>
+				<figure>
+				
+					<img src='<c:out value="${root }/resources/img/conquest/${conq.mname}.png"/>' width="150" 
+						class="img-responsive img-rounded" /><!-- items에 서버단에서 DB연동결과물 request.setAttribute("키값명",저장객체) 와야함 -->
+						           
+					<h4>${conq.mname } 도장깨기</h4>
+					<div class="overlay">
+						<div class="description">
+						
+							<form action='<c:url value="Conquest/addConquest" />'
+									method="post" id="addConquest">
+									
+									<table>
+										<tr>
+											<td hidden="hidden">정복최대횟수</td>
+											<td class="maxconquest" hidden="hidden">100000000000</td>
+											<td>
+												<input hidden="hidden" name="member_no" value="${authUser.no }"></input>
+												<input hidden="hidden" name="mountain_no" value="${conq.mountain_no }"></input>
+												<button id="add-btn" name="plusminus" type="button" class="btn btn-outline-success"
+													onclick="Count('p',this);" type="submit">정복!!!!</button>
+												<input type="text" name="conquestcnt" value="${conq.conquestcnt }" readonly="readonly" style="text-align: center;" />
+												<button name="plusminus" type="button" onclick="Count('m', this);" 
+													class="btn btn-outline-success" type="submit">잘못눌렀네,,</button>
+											</td>
+										</tr>
+									</table>			
+	
+							</form>
+								
+							<form action='<c:url value="Conquest/updateConquest" />'method="post" id="updateConquest">
+								<input hidden="hidden" name="conquestcnt" value="${conq.conquestcnt }"></input>
+								<button id="up-btn" type="submit"> update </button>
+							</form>
+						
+						</div>
+					</div>
+				
+					
+				</figure>
+			</div>
+				</c:forEach>
+				
+		</div>
+</div>
+
+
+
+
+
+<%-- 만약 이거 에러나도 안 버려도 되는 코드고 이대로 가면 되고
+ㄱ두래!ㅏ등록할 때 똑같이 List<conqStickerVO> 객체 list로 보내면 잘 읽혀질 거예여
+그리고 등록은 잘 되는데 업뎃된 정보가 여기에 안 보인다 -> ajax 후에 성공하면 돌리는 코드에서 이 jsp 조작해야 됨넹넹
+ --%>
+
+<hr>
+
+ 
+<%-- 
 	<div class="container">
 		<div class="row d-flex flex-row justify-content-center">
 			<!-- row 방향으로 가로 배열할 때, 중앙 정렬  -->
@@ -378,14 +467,14 @@ figure:hover .overlay {
 
 									<tr>
 										<td hidden="hidden">정복최대횟수</td>
-										<td class="maxconquest" hidden="hidden">1000</td>
+										<td class="maxconquest" hidden="hidden">100000000000</td>
 										<td><input hidden="hidden" name="member_no"
 											value="${authUser.no }"></input> <input hidden="hidden"
 											name="mountain_no" value="291"></input>
 											<button id="btn-1" name="conquestcnt" type="button"
 												onclick="Count('p',this);" class="btn btn-outline-success"
 												type="submit">정복!!!!</button> <input type="text"
-											name="conquestcnt" value="0" readonly="readonly"
+											name="conquestcnt" value="1" readonly="readonly"
 											style="text-align: center;" />
 											<button name="conquestcnt" type="button"
 												onclick="Count('m', this);" class="btn btn-outline-success"
@@ -394,39 +483,43 @@ figure:hover .overlay {
 								</table>
 
 
-								<!-- <!-- 1.북한산 291
+								<!--  1.북한산 291
 2. 도봉산 740
 3. 수락산 44
 4. 인왕산 294
 5. 아차산 297
 6. 관악산 61 -->
-								-->
+							
 
 							</form>
-							<%-- 		초반 script사용소스	 <img id="bughansan"
+							<form action='<c:url value="Conquest/updateConquest" />'method="post" id="updateConquest">
+							<input hidden="hidden" name="conquestcnt" value=""></input>
+							<button id="up-btn" type="submit"> update </button>
+							</form>
+							
+									초반 script사용소스	 <img id="bughansan"
 								src="${root }/resources/img/conquest/mountain_black.png">
 							<script>
 									document.getElementById('bughansan').src = bughansan_info()
-								</script>  --%>
+								</script> 
 						</div>
 					</div>
 				</figure>
 
 			</div>
 
-
+ 
 			<div>
 				<figure>
 					<img src="${root }/resources/img/conquest/dobongsan.png"
 						class="img-responsive img-rounded" />
 					<h4>도봉산 도장깨기</h4>
 					<div class="overlay">
-						<div class="description">
-							스티커이미지 추가추가추가~
-							<%--스크립트로 표현하는경우<img id="title" src="">
+						<div class="description"> 스티커이미지 추가추가추가~
+							스크립트로 표현하는경우<img id="title" src="">
 							<script>
 								document.getElementById('title').src = title_info()
-							</script>--%>
+							</script>
 
 						</div>
 
@@ -479,43 +572,13 @@ figure:hover .overlay {
 				</figure>
 
 			</div>
-
+ 
 		</div>
-
-
-	</div>
-	<!-- <p class="addConquest">
+	</div> 
+	
+	 --%>
 	
 
-		<script>
-			$(".addConquest_btn").click(function() {
-				var member_no = $("#member_no").val();
-				var conquestcnt = $(".numBox").val();
-
-				var data = {
-					mountain_no : mountain_no,//산번호
-					conquestcnt : conquestcnt //담은갯수 
-				};
-
-				$.ajax({
-					url : "/conquest/view/addConquest",
-					type : "post",
-					data : data,
-					success : function(result) {
-						alert("담기 성공");
-						$(".numBox").val("1");
-					},
-					error : function() {
-						alert("카트 담기 실패");
-					}
-				});
-			});
-		</script>
-	</p> -->
-	<!-- 
-	private Long no; private Long member_no; //회원번호(pk) private int
-	conquestcnt; //추가됨 -> 산별 정복 카운트 private int mountain_no;//산 번호(pk)
-	private Date condate; // (==regdate ) 점령날짜 현재날짜 -->
 
 </body>
 </html>

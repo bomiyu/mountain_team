@@ -35,13 +35,44 @@
 		(#{no}, #{member_no}, #{mountain_no}, #{conquestcnt})
 
 	</insert>
-<!-- 	
-은지작업중 
-	<select id="getConquestCount"
-		resultType="org.zerock.domain.conquest.ConquestVO">
-		select * from Conquest 
+	<update id="updateConquest">
+		UPDATE Conquest
+		SET
+		conquestcnt = #{conquestcnt},
+		condate = sysdate
+		where
+		no= #{no}
+	</update>
+	
+	
+<!-- 레코드 갯수 확인용 -->
+	<select id="checkCnt">
+		select count(*) from conquest
+		where member_no = #{member_no}
+		and mountain_no = #{mountain_no}
 	</select>
- -->
+
+	<!-- for CONQUEST table -->
+	<select id="getMnameList"
+		resultType="org.zerock.domain.mountain.MnameVO">
+		SELECT no, mname FROM mountain
+		ORDER BY mname
+	</select>
+
+	<select id="getConqListbyMem" parameterType="long"
+		resultType="org.zerock.domain.mountain.ConqStickerVO">
+	<!-- 	SELECT mountain_no, mname, sum(conquestcnt) conquestcnt
+		FROM
+		( -->
+		SELECT mountain_no, conquestcnt, mname
+		FROM conquest c JOIN mountain m
+		ON c.mountain_no = m.no
+		WHERE c.member_no = #{user_no}
+		ORDER BY m.mname
+		)
+	<!-- 	GROUP BY mountain_no, mname
+		ORDER BY mname -->
+	</select>
 </mapper>
 
 

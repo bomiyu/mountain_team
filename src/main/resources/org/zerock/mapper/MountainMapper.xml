@@ -1,61 +1,98 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.zerock.mapper.MountainMapper">
 
-<select id="getList" resultType="org.zerock.domain.mountain.MountainVO">
-<![CDATA[
-		select * from mountain where no > 0
-]]>			
+	<sql id="MCriteria">
+		<where>
+			<if test="keyword != null">
+				mname LIKE '%' || #{keyword} || '%'
+				OR mloc LIKE '%' || #{keyword} || '%'
+			</if>
+		</where>
+	</sql>
+	
+	
+	<select id="getTotalCount" resultType="int">
+		SELECT count(*) FROM mountain
+		<include refid="MCriteria"></include>
 	</select>
-	
-	<select id="getListWithPaging" resultType="org.zerock.domain.mountain.MountainVO">
+
+	<insert id="insertSelectKey">
+		<selectKey keyProperty="no" order="BEFORE" resultType="long">
+			SELECT seq_mountain.nextval FROM dual
+		</selectKey>
+
+		INSERT INTO mountain (no, mname, mloc, height, status, description)
+		VALUES (#{no}, #{mname}, #{mloc}, #{height}, #{status}, #{description})
+	</insert>
+
+	<select id="read" resultType="org.zerock.domain.mountain.MountainVO">
+		SELECT * FROM mountain WHERE no = #{no}
+	</select>
+
+	<update id="update">
+		UPDATE mountain
+		SET mname = #{mname},
+			mloc = #{mloc},
+			height = #{height},
+			status = #{status},
+			description = #{description}
+		WHERE no = #{no}
+	</update>
+
+	<delete id="delete">
+		DELETE FROM mountain WHERE no = #{no}
+	</delete>
+
+	<select id="getList" resultType="org.zerock.domain.mountain.MountainVO">
 	<![CDATA[
-	SELECT 
-	no, mName, mLoc,height,status
-	FROM 
-	(
-	SELECT
-	 ROW_NUMBER() OVER (ORDER BY no DESC) rn,
-	no, mName, mLoc, height, status
-	FROM
-	mountain
-	
+		SELECT * FROM mountain WHERE no > 0
+		ORDER BY no DESC
 	]]>
 	</select>
+
+	<select id="getListWithPaging" resultType="org.zerock.domain.mountain.MountainVO">
+	<![CDATA[
+	SELECT no, mname, mloc, height, status, description
+	FROM 
+		(
+		SELECT
+			ROW_NUMBER() OVER (ORDER BY no DESC) rn,
+			no, mname, mloc, height, status, description
+		FROM 
+			mountain
+	]]>
+
+		<include refid="MCriteria"></include>
 	
-<insert id="insert">
-insert into mountain (no, mName, mLoc, height, status)
-values(seq_mountain.nextval, #{mName}, #{mLoc}, #{height}, #{status})
-</insert>
+	<![CDATA[
+	 	)
+	WHERE
+		rn BETWEEN (#{curPage} - 1) * #{amount} + 1 AND #{curPage} * #{amount}
+	]]>
+	</select>
 
- <insert id="insertSelectKey">
-<selectKey keyProperty="no" order="BEFORE" resultType="long">
-select seq_mountain.nextval from dual
-</selectKey>
 
-insert into mountain (no, mName, mLoc, height,status)
-values (#{no},  #{mName},#{mLoc}, #{height}, #{status} )
-</insert> 
-
-<select id="read" resultType="org.zerock.domain.mountain.MountainVO">
-select * from mountain where no = #{no}
-</select>
-
-<delete id="delete">
-delete from mountain where no = #{no}
-</delete>
-
-<update id="update">
-update mountain 
-set 
-   mName = #{mName},
-    mLoc = #{mLoc},
-    height=#{height},
-    status=#{status}
-    where no = #{no}
-   
-</update>
+	<!-- for CONQUEST table -->
+	<select id="getMnameList" resultType="org.zerock.domain.mountain.MnameVO">
+		SELECT no, mname FROM mountain
+		ORDER BY mname
+	</select>
+	
+	<select id="getConqListbyMem" parameterType="long" resultType="org.zerock.domain.mountain.ConqStickerVO">
+		SELECT mountain_no, mname, sum(conquestcnt) conquestcnt
+		FROM 
+		(
+			SELECT mountain_no, conquestcnt, mname
+			FROM conquest c JOIN mountain m 
+			ON c.mountain_no = m.no 
+			WHERE c.member_no = #{user_no}
+			ORDER BY m.mname
+		)
+		GROUP BY mountain_no, mname
+		ORDER BY mname
+	</select>
 	
 </mapper>	

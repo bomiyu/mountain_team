@@ -51,7 +51,7 @@
     <c:if test="${not empty sessionScope.authUser }">
 	     <ul> 
 	    	 <li class="nav-item">
-	      		 <a class="nav-link" href="${root }/member/myHome">마이홈</a>
+	      		 <a class="nav-link" href="${root }/member/myHome?">마이홈</a>
 	   		 </li>
 	     
 	   		 <li class="nav-item">

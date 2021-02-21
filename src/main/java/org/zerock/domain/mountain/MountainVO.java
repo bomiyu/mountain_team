@@ -5,11 +5,10 @@ import lombok.Data;
 @Data
 public class MountainVO {
    private Long no;
-   private String mName;
-   private String mLoc;
+   private String mname;
+   private String mloc;
    private int height;
    private int status;
-	
-
-
+   private String description;
+   
 }

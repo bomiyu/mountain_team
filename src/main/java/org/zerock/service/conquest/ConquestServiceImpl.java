@@ -1,8 +1,12 @@
 package org.zerock.service.conquest;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.zerock.domain.conquest.ConquestVO;
+import org.zerock.domain.mountain.ConqStickerVO;
+import org.zerock.domain.mountain.MnameVO;
 import org.zerock.mapper.ConquestMapper;
 
 import lombok.AllArgsConstructor;
@@ -19,11 +23,29 @@ public class ConquestServiceImpl implements ConquestService {
 	@Override
 	@Transactional
 	public int addConquest(ConquestVO cvo) {
-		mapper.addConquest(cvo);
 		return mapper.addConquest(cvo);
 	}
+ 
+	@Override 
+	public boolean updateConquest(ConquestVO cvo) { 
+		return mapper.updateConquest(cvo) == 1; 
+		}
+
+	// for CONQUEST table
+	@Override
+	public List<MnameVO> getMnameList() {
+		return mapper.getMnameList();
+	}
 	
-	  
+	@Override
+	public List<ConqStickerVO> getConqListbyMem(Long user_no) {
+		return mapper.getConqListbyMem(user_no);
+	}
+	
+	
+	public int checkCnt() {
+		return mapper.checkCnt();
+	}
 	/*
 	 * @Override public int getConquestCount() { return mapper.getConquestCount(); }
 	 */
@@ -32,13 +54,12 @@ public class ConquestServiceImpl implements ConquestService {
 	 * 
 	 * @Override public List<ConquestVO> getList(Ccriteria cri) { // paging처리 return
 	 * mapper.getListWithPaging(cri); }
-	
+	 * 
 	 * 
 	 * @Override public boolean deleteConquest(Long no) { return mapper.delete(no)
 	 * == 1; }
 	 * 
-	 * @Override public boolean updateConquest(ConquestVO cvo) { return
-	 * mapper.update(cvo) == 1; }
+	 *
 	 * 
 	 * @Override public int getTotal(Ccriteria cri) { return
 	 * mapper.getConquestCount(cri); }

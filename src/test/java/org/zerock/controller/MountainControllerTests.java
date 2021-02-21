@@ -2,6 +2,8 @@ package org.zerock.controller;
 
 import static org.junit.Assert.assertNotNull;
 
+import java.util.Map;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -50,11 +52,17 @@ public class MountainControllerTests {
 	
 	@Test
 	public void testList() throws Exception{
-		ModelAndView mv = mockMvc.perform(MockMvcRequestBuilders.get("/*/list"))
+		ModelAndView mv = mockMvc.perform(MockMvcRequestBuilders.get("/board/list"))
 				.andReturn()
 				.getModelAndView();
+		
+		Map<String, Object> model = mv.getModel();
+		Object o = model.get("list");
+		
+		String viewName = mv.getViewName();
+		
 	}
-	
+
 	@Test
 	public void testRegister() throws Exception {
 	 MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/register")
@@ -68,44 +76,84 @@ public class MountainControllerTests {
 	 
 	
 	}
-	
+		
 	@Test
 	public void testGet() throws Exception{
-		log.info(mockMvc.perform(MockMvcRequestBuilders
-				.get("/get")
+		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/board/get")
+				.param("no", "44"))
+				.andReturn();
+		
+		String viewName = result.getModelAndView().getViewName();
+		Map<String, Object> modelMap = result.getModelAndView().getModel();
+				
+		/*log.info(mockMvc.perform(MockMvcRequestBuilders
+				.get("/board/get")
 				.param("no", "44"))
 				.andReturn()
-				.getModelAndView().getModelMap());
+				.getModelAndView().getModelMap());*/
 	}
 	
 	@Test
 	public void testModify() throws Exception{
 		MountainVO mountain = new MountainVO();
-		mountain.setMName("산 이름 수정입니다.");
-		mountain.setMLoc("산 수정된 위치입니다.");
-		mountain.setHeight(350);
-		mountain.setStatus(1);
+		mountain.setMname("이름");
+		mountain.setMloc("서울시 동작구");
+		mountain.setHeight(480);
+		mountain.setStatus(0);
 		
-		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/modify")
+		mapper.insertSelectKey(mountain);
+		
+		Long key = mountain.getNo();
+		
+		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/board/modify")
+			    .param("no", key +"")
+			    .param("MName","인왕산")
+			    .param("MLoc", "서울 종로구와 서대문구 홍제동 경계에 있는 산")
+			    .param("height", "338.2")
+			    .param("status", "0"))
+				.andReturn();
+		
+		   
+				/*
 				.param("no", "44")
 				.param("MName", "수락산 입니다.")
 				.param("MLoc", "서울시 노원구에서 경기도 의정부시, 남양주시까지 걸쳐있는 산")
 				.param("height", "638")
 				.param("status", "0"))
 				.andReturn();
+				*/
 	}
 
 	@Test
 	public void testRemove() throws Exception{
 		// no--> 가져와서 삭제
-		MvcResult resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/remove")
-				.param("no", "49")
-				).andReturn();
+		/*
+		MountainVO mountain = new MountainVO();
+		
+		mountain.setMName("이름");
+		mountain.setMLoc("서울시 동작구");
+		mountain.setHeight(480);
+		mountain.setStatus(0);
+		
+		mapper.insertSelectKey(mountain);
+		
+		Long key = mountain.getNo();
+		
+		int before = mapper.getList().size();
+		*/
+		String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/board/remove")
+				.param("no", "284"))
+				.andReturn()
+		        .getModelAndView().getViewName();
+		
+		int after= mapper.getList().size();
 		
 		log.info(resultPage);
+		
+		
 	}
 	
 	
 
-	
+
 }
