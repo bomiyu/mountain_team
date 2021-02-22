@@ -371,10 +371,10 @@ figure:hover .overlay {
 	</div>
 
 	<!-- 정복 산 리스트 -->
-	<p>카운트확인!!!!!!!${list.conquestcnt }</p>
+	<p>카운트확인!!!!!!!${list.size() }</p>
 	
 	<form action='<c:url value="Conquest/updateConquest" />'method="post" id="updateConquest">
-								<input hidden="hidden" name="conquestcnt" value="${list.conquestcnt }"></input>
+								<input hidden="hidden" name="conquestcnt" value="${list.size() }"></input>
 								<button id="up-btn" type="submit"> update </button>
 							</form><!-- test용버튼  -->
 	

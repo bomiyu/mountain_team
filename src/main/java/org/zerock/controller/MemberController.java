@@ -1,29 +1,27 @@
 package org.zerock.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.zerock.domain.conquest.ConquestVO;
 import org.zerock.domain.member.MEmailDTO;
 import org.zerock.domain.member.MemberVO;
-import org.zerock.service.conquest.ConquestService;
+import org.zerock.domain.mountain.ConqStickerVO;
+import org.zerock.domain.mountain.MnameVO;
 import org.zerock.service.member.MemberService;
+import org.zerock.service.mountain.MountainService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -35,6 +33,9 @@ import lombok.extern.log4j.Log4j;
 public class MemberController {
 
 	private MemberService service;
+	
+	private MountainService mountainService;
+
 	
 	// ##회원가입 - GET
 	@GetMapping("/join")
@@ -57,6 +58,7 @@ public class MemberController {
 
 		if (errors.isEmpty()) {
 			service.register(member);
+		
 			// 서비스에 일을 시키고
 			log.info(member);
 			return "redirect:joinSuccess";
@@ -186,8 +188,15 @@ public class MemberController {
 
 	// ##내 정보 보기
 	@GetMapping("/myHome")
-	public String myHome() {
-
+	public String myHome(Model model, HttpSession session) {
+		MemberVO vo = (MemberVO) session.getAttribute("authUser");
+		
+		List<ConqStickerVO> list = null;
+		
+		if (vo != null) {
+			list = mountainService.getConqListbyMem();// 이 리스트를 보내도 되나,,,?
+		}
+		model.addAttribute("list", list);
 		return "/member/myHome";
 
 		// return "redirect:member/myHome";

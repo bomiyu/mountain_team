@@ -82,17 +82,17 @@
 	</select>
 	
 	<select id="getConqListbyMem" parameterType="long" resultType="org.zerock.domain.mountain.ConqStickerVO">
-		SELECT mountain_no, mname, sum(conquestcnt) conquestcnt
+	<!-- 	SELECT mountain_no, mname, sum(conquestcnt) conquestcnt
 		FROM 
-		(
+		( -->
 			SELECT mountain_no, conquestcnt, mname
 			FROM conquest c JOIN mountain m 
 			ON c.mountain_no = m.no 
 			WHERE c.member_no = #{user_no}
 			ORDER BY m.mname
-		)
+		<!-- )
 		GROUP BY mountain_no, mname
-		ORDER BY mname
+		ORDER BY mname -->
 	</select>
 	
 </mapper>	
