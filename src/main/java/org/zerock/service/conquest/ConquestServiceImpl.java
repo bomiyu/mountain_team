@@ -43,8 +43,8 @@ public class ConquestServiceImpl implements ConquestService {
 	}
 	
 	
-	public int checkCnt() {
-		return mapper.checkCnt();
+	public int checkCnt(long member_no, long mountain_no) {
+		return mapper.checkCnt(member_no, mountain_no);
 	}
 	/*
 	 * @Override public int getConquestCount() { return mapper.getConquestCount(); }
@@ -52,7 +52,7 @@ public class ConquestServiceImpl implements ConquestService {
 	/*
 	 * @Override public List<ConquestVO> getList() { return mapper.getList(); }
 	 * 
-	 * @Override public List<ConquestVO> getList(Ccriteria cri) { // paging처리 return
+	 * @Override public List<ConquestVO> getList(Ccriteria cri) { // pagingì²˜ë¦¬ return
 	 * mapper.getListWithPaging(cri); }
 	 * 
 	 * 
@@ -65,3 +65,4 @@ public class ConquestServiceImpl implements ConquestService {
 	 * mapper.getConquestCount(cri); }
 	 */
 }
+

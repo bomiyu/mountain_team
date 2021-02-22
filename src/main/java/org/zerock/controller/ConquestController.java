@@ -32,23 +32,22 @@ public class ConquestController {
 	@Setter(onMethod_ = @Autowired)
 	private MountainService mservice;
 
-	@PostMapping(value = "/addConquest")
-	public ResponseEntity<String> addConquest(@ModelAttribute("cvo") ConquestVO cvo, Model model) {
-		
-		log.info("vo: " + cvo);
-		
-		int insertCount = service.addConquest(cvo);
-
-			
-		
-		log.info("count: " + insertCount);
-		
-		if (insertCount == 1) {
-			return new ResponseEntity<> ("success", HttpStatus.OK);
-		} else {
-			return new ResponseEntity<> (HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
+	/*
+	 * @PostMapping(value = "/addConquest") public ResponseEntity<String>
+	 * addConquest(@ModelAttribute("cvo") ConquestVO cvo, Model model) {
+	 * 
+	 * log.info("vo: " + cvo);
+	 * 
+	 * int insertCount = service.addConquest(cvo);
+	 * 
+	 * 
+	 * 
+	 * log.info("count: " + insertCount);
+	 * 
+	 * if (insertCount == 1) { return new ResponseEntity<> ("success",
+	 * HttpStatus.OK); } else { return new ResponseEntity<>
+	 * (HttpStatus.INTERNAL_SERVER_ERROR); } }
+	 */
 
 	@PostMapping(value = "/updateConquest",
 				 consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
@@ -64,6 +63,9 @@ public class ConquestController {
 		
 			if(service.updateConquest(cvo)) {// 그냥 cvo 보내서 update하고, 잘 업뎃됐으면 ok 보내주면 됨
 				List<ConqStickerVO> list = mservice.getConqListbyMem(cvo.getMember_no());// 이 리스트를 보내도 되나,,,?
+				
+				log.info(list);
+				
 				return new ResponseEntity<>(list, HttpStatus.OK);
 			} else {
 				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);			
@@ -71,15 +73,4 @@ public class ConquestController {
 
 	}
 	
-	@PostMapping("/updateConquest")
-	public void checkCnt(Model model) {
-
-		int cnt = service.checkCnt();
-		model.addAttribute("check", cnt);
-		
-	}
-	
-	
-	
-
 }

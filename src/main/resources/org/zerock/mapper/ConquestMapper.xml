@@ -1,78 +1,75 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
+
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
+ 
 <mapper namespace="org.zerock.mapper.ConquestMapper">
-	<!-- <sql id="ccriteria"> <where> <foreach item="type" collection="typeArr" 
-		separator="OR"> <choose> <when test="type == 'T'.toString()"> title LIKE 
-		'%' || #{keyword} || '%' </when> <when test="type == 'C'.toString()"> content 
-		LIKE '%' || #{keyword} || '%' </when> <when test="type == 'W'.toString()"> 
-		member_no LIKE '%' || #{keyword} || '%' </when> </choose> </foreach> </where> 
-		</sql> -->
+
+	<!-- <sql id="ccriteria"> <where> <foreach item="type" collection="typeArr"separator="OR"> 
+		<choose> <when test="type == 'T'.toString()"> title LIKE'%' || #{keyword} 
+		|| '%' </when> <when test="type == 'C'.toString()"> contentLIKE '%' || #{keyword} 
+		|| '%' </when> <when test="type == 'W'.toString()">member_no LIKE '%' || 
+		#{keyword} || '%' </when> </choose> </foreach> </where></sql> -->
 
 
-	<!-- <select id="getListWithPaging" resultType="org.zerock.domain.ConquestVO"> 
-		<![CDATA[ SELECT bno, title, content, writer, regdate, updatedate, replycnt 
-		FROM ( SELECT ROW_NUMBER() OVER (ORDER BY bno DESC) rn, bno, title, content, 
-		writer, regdate, updatedate, replycnt FROM tbl_board ]]> <include refid="criteria"></include> 
-		<![CDATA[ ) WHERE rn BETWEEN (#{pageNum} - 1) * #{amount} + 1 AND #{pageNum} 
-		* #{amount} ]]> </select> -->
-
-	<!-- <select id="getList" resultType="org.zerock.domain.conquest.ConquestVO"> 
-		<![CDATA[ select * from FreeBoard where no > 0 ]]> </select> <delete id="delete"> 
-		delete from Conquest where no = #{no} </delete> <update id="update"> UPDATE 
-		Conquest SET conquestcnt = #{conquestcnt}, mountain_no = #{mountain_no}, 
-		member_no = #{member_no} WHERE no = #{no} </update> -->
+	<!-- <select id="getListWithPaging" resultType="org.zerock.domain.ConquestVO"><![CDATA[ 
+		SELECT bno, title, content, writer, regdate, updatedate, replycntFROM ( SELECT 
+		ROW_NUMBER() OVER (ORDER BY bno DESC) rn, bno, title, content,writer, regdate, 
+		updatedate, replycnt FROM tbl_board ]]> <include refid="criteria"></include><![CDATA[ 
+		) WHERE rn BETWEEN (#{pageNum} - 1) * #{amount} + 1 AND #{pageNum}* #{amount} 
+		]]> </select> -->
 
 
+	<!-- <select id="getList" resultType="org.zerock.domain.conquest.ConquestVO"><![CDATA[ 
+		select * from FreeBoard where no > 0 ]]> </select> <delete id="delete">delete 
+		from Conquest where no = #{no} </delete> <update id="update"> UPDATEConquest 
+		SET conquestcnt = #{conquestcnt}, mountain_no = #{mountain_no},member_no 
+		= #{member_no} WHERE no = #{no} </update> -->
+
+
+
+	
 	<insert id="addConquest">
-		<selectKey keyProperty="no" order="BEFORE" resultType="long">
-			select seq_conquest.nextval FROM Dual
-		</selectKey>
-		insert into conquest (no, member_no, mountain_no, conquestcnt )
-		values
-		(#{no}, #{member_no}, #{mountain_no}, #{conquestcnt})
 
+		<selectKey resultType="long" order="BEFORE" keyProperty="no">select
+			seq_conquest.nextval FROM Dual </selectKey>
+		insert into conquest (no, member_no, mountain_no, conquestcnt
+		)values(#{no}, #{member_no}, #{mountain_no}, #{conquestcnt})
 	</insert>
+
 	<update id="updateConquest">
-		UPDATE Conquest
-		SET
-		conquestcnt = #{conquestcnt},
-		condate = sysdate
-		where
-		no= #{no}
-	</update>
-	
-	
-<!-- 레코드 갯수 확인용 -->
-	<select id="checkCnt">
-		select count(*) from conquest
-		where member_no = #{member_no}
-		and mountain_no = #{mountain_no}
+	UPDATE Conquest SET conquest cnt = #{conquestcnt}, condate = sysdate where no= #{no} </update>
+
+	<!-- 레코드 갯수 확인용 -->
+
+
+	<select id="checkCnt" resultType="int">
+	select count(*) from
+		conquest where member_no = #{member_no} and mountain_no = #{mountain_no}
 	</select>
 
 	<!-- for CONQUEST table -->
+
+
 	<select id="getMnameList"
 		resultType="org.zerock.domain.mountain.MnameVO">
-		SELECT no, mname FROM mountain
-		ORDER BY mname
+		SELECT no, mname FROM mountain ORDER BY mname </select>
+
+
+	
+	<select id="getConqListbyMem"
+		resultType="org.zerock.domain.mountain.ConqStickerVO"
+		parameterType="long">
+
+		<!-- SELECT mountain_no, mname, sum(conquestcnt) conquestcntFROM( -->
+
+		SELECT mountain_no, conquestcnt, mname FROM conquest c JOIN mountain
+		m ON c.mountain_no = m.no WHERE c.member_no = #{user_no} ORDER BY 
+		m.mname)
+		<!-- GROUP BY mountain_no, mnameORDER BY mname -->
+
+
 	</select>
 
-	<select id="getConqListbyMem" parameterType="long"
-		resultType="org.zerock.domain.mountain.ConqStickerVO">
-	<!-- 	SELECT mountain_no, mname, sum(conquestcnt) conquestcnt
-		FROM
-		( -->
-		SELECT mountain_no, conquestcnt, mname
-		FROM conquest c JOIN mountain m
-		ON c.mountain_no = m.no
-		WHERE c.member_no = #{user_no}
-		ORDER BY m.mname
-		)
-	<!-- 	GROUP BY mountain_no, mname
-		ORDER BY mname -->
-	</select>
 </mapper>
-
-

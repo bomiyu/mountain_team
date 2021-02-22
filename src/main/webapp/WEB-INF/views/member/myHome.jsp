@@ -75,7 +75,7 @@
 
 <script>
 
-/*insert*/
+/*insert
 	var ConquestService = (function() {
 		function addConquest(data, callback, error) {
 			console.log(JSON.stringify(data));
@@ -100,7 +100,7 @@
 			addConquest : addConquest
 		};
 	})();
-	/* 카운트 ajax로 데이터 보내기 */
+
 	$(document).ready(function() {
 		//$("#addConquest").serializeArray();
 		$("#add-btn").click(function(e) {
@@ -108,7 +108,7 @@
 			ConquestService.addConquest($("#addConquest").serialize());
 		});
 	});
-
+ */
 	
 	/*update*/
 
@@ -118,9 +118,9 @@
 			
 			$.ajax({
 				type : "post",
-				url : (conquestcnt == 0) ? appRoot + "/Conquest/addConquest" : appRoot + "/Conquest/updateConquest", // 컨트롤러 매핑
+				url : appRoot + "/Conquest/updateConquest", // 컨트롤러 매핑
 				contentType: "application/json",// 이 타입으로 data를 보내겠다 컨트롤러에
-				data : (conquestcnt == 0) ? {"member_no": member_no,"mountain_no":mountain_no, "conquestcnt":conquestcnt} : {"conquestcnt": conquestcnt}, // form data를 json
+				data : {"conquestcnt": conquestcnt}, // form data를 json
 				success : function(result, stauts, xhr) {
 					if (callback) {
 						callback(result);
@@ -373,11 +373,11 @@ figure:hover .overlay {
 	<!-- 정복 산 리스트 -->
 	<p>카운트확인!!!!!!!${list.size() }</p>
 	
-	<form action='<c:url value="Conquest/updateConquest" />'method="post" id="updateConquest">
+<%-- 	<form action='<c:url value="Conquest/updateConquest" />'method="post" id="updateConquest">
 								<input hidden="hidden" name="conquestcnt" value="${list.size() }"></input>
 								<button id="up-btn" type="submit"> update </button>
 							</form><!-- test용버튼  -->
-	
+	 --%>
 
 	<!-- row 방향으로 가로 배열할 때, 중앙 정렬  -->
 	
