@@ -159,13 +159,7 @@ public class MemberController {
 						conqService.addConquest(cvo);// conquestcnt 0으로 세팅해서 add(insert)
 						
 						
-					} /*
-						 * else if(conqService.checkCnt(member_no, mountain_no) != 0) {// Conquest
-						 * table에 레코드 없으면 ConquestVO cvo = new ConquestVO();
-						 * cvo.setMember_no(member_no); cvo.setMountain_no(mountain_no);
-						 * cvo.setConquestcnt(conquestcnt); conqService.updateConquest(cvo);)
-						 */
-					
+					}
 					
 				}
 			}

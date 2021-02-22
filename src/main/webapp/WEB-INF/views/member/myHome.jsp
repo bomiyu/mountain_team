@@ -123,7 +123,8 @@
 				data : data, // form data를 json
 				success : function(result, stauts, xhr) {
 					if (callback) {
-						callback(result);
+						callback(result); 
+
 					}
 				},
 				error : function(xhr, status, er) {
@@ -140,10 +141,10 @@
 		//$("#addConquest").serializeArray();
 		$(".up-btn").click(function(e) {
 			e.preventDefault();
-			updateConquest($(this).closest("form").serialize());
+			updateConquest($(this).closest("form").serialize());//엘리멘트의 가장가까운 level만 변경
 		});
 	});
-	
+	$('sticker' ).append('<div><img src='<c:out value="${root }/resources/img/conquest/mountain_black.png"/>' /> </div>'  );
 	
 	/* 정복산 count */
 	function Count(type, ths) {
@@ -159,31 +160,20 @@
 		}
 	}
 	
-	
-	
-	/*1번  작업실패
-	function bughansan_info() {
-	 var mountain_no = "<c:out value='${mountain_no}'/>";
-	 console.log(mountain_no);
-	 var img_src;
-	 if(mountain_no == 291) {
-	 img_src="${root }/resources/img/conquest/mountain_black.png";
-	 }
-	 return img_src;
-	 }
-	
-	 function dobongsan_info() {
-	 var mountain_no = "<c:out value='${mountain_no}'/>";
-	 if(mountain_no == 740) {
-	 img_src = "${root }/resources/img/conquest/mountain_blue.png";
-	 }
-	 return img_src;
-	 } */
 </script>
 
 <title>산산산</title>
 
 <style>
+
+/*sticker이미지 사이즈*/
+
+.sticker{   
+	width: 30px;/*크기*/
+	flex-wrap: wrap ;
+}
+
+
 /* 산정복 효과 */
 figure {
 	width: 100%;
@@ -205,7 +195,7 @@ figure h4 { /* 사진 위에 뜨는 텍스트공간  */
 	margin: 0;
 }
 figure .overlay {
-	position: absolute;
+ 	position: absolute; 
 	bottom: 0;
 	left: 0;
 	right: 0;
@@ -372,12 +362,6 @@ figure:hover .overlay {
 
 	<!-- 정복 산 리스트 -->
 	<p>카운트확인!!!!!!!${list.size() }</p>
-	
-<%-- 	<form action='<c:url value="Conquest/updateConquest" />'method="post" id="updateConquest">
-								<input hidden="hidden" name="conquestcnt" value="${list.size() }"></input>
-								<button id="up-btn" type="submit"> update </button>
-							</form><!-- test용버튼  -->
-	 --%>
 
 	<!-- row 방향으로 가로 배열할 때, 중앙 정렬  -->
 	
@@ -404,15 +388,35 @@ figure:hover .overlay {
 											<td hidden="hidden">정복최대횟수</td>
 											<td class="maxconquest" hidden="hidden">100000000000</td>
 											<td>
-												 <input hidden="hidden" name="member_no" value="${authUser.no }"></input>
+											
+									
+ 												<div class="row-vh d-flex flex-row align-items-start">									 	
+											 	
+											
+											<%--  test용 이미지 
+											 	<div><img src='<c:out value="${root }/resources/img/conquest/mountain_black.png"/>' width="20"/> </div> 
+											 	<div><img src='<c:out value="${root }/resources/img/conquest/mountain_black.png"/>' width="20"/> </div> 
+											 	<div><img src='<c:out value="${root }/resources/img/conquest/mountain_black.png"/>' width="20"/> </div> 
+											 	<div><img src='<c:out value="${root }/resources/img/conquest/mountain_black.png"/>' width="20"/> </div>  
+											 	<div><img src='<c:out value="${root }/resources/img/conquest/mountain_black.png"/>' width="20"/> </div>  
+											 	<div><img src='<c:out value="${root }/resources/img/conquest/mountain_black.png"/>' width="20"/> </div>  
+											 	<div><img src='<c:out value="${root }/resources/img/conquest/mountain_black.png"/>' width="20"/> </div>  
+											 	<div><img src='<c:out value="${root }/resources/img/conquest/mountain_black.png"/>' width="20"/> </div>   --%>
+
+												</div>
+
+									     		<div class="item mb-auto">
+												<input hidden="hidden" name="member_no" value="${authUser.no }"></input>
 												<input hidden="hidden" name="mountain_no" value="${conq.mountain_no }"></input> 
-												<button id="plus" name="plusminus" type="button" class="btn btn-outline-success"
-													onclick="Count('p',this);" type="submit">정복!!!!</button>
+												<button id="plus" name="plusminus" type="button" class="btn btn-success"
+													onclick="Count('p',this);" type="submit">정복+1 !!!!</button>
 												<input type="text" name="conquestcnt" value="${conq.conquestcnt }" readonly="readonly" style="text-align: center;" />
 												<button name="minus" type="button" onclick="Count('m', this);" 
-													class="btn btn-outline-success">잘못눌렀네,,</button>
-													
-										<button class="up-btn" id="up-btn" type="submit"> update </button>
+													class="btn btn-outline-success">잘못눌렀네,,</button>													
+												<div><button class="up-btn btn btn-success" id="up-btn" type="submit"> update </button></div>
+											 
+											 </div>
+											 											
 											</td>
 										</tr>
 									</table>			
@@ -430,153 +434,6 @@ figure:hover .overlay {
 				
 		</div>
 </div>
-
-
-
-
-
-<%-- 만약 이거 에러나도 안 버려도 되는 코드고 이대로 가면 되고
-ㄱ두래!ㅏ등록할 때 똑같이 List<conqStickerVO> 객체 list로 보내면 잘 읽혀질 거예여
-그리고 등록은 잘 되는데 업뎃된 정보가 여기에 안 보인다 -> ajax 후에 성공하면 돌리는 코드에서 이 jsp 조작해야 됨넹넹
- --%>
-
-<hr>
-
- 
-<%-- 
-	<div class="container">
-		<div class="row d-flex flex-row justify-content-center">
-			<!-- row 방향으로 가로 배열할 때, 중앙 정렬  -->
-
-			<div>
-				<figure>
-					<img src="${root }/resources/img/conquest/bughansan.png"
-						class="img-responsive img-rounded" />
-					<h4>북한산 도장깨기</h4>
-
-					<div class="overlay">
-						<div class="description">
-							<!-- 	스티커이미지 추가추가추가~ -->
-							<!-- 		<button name="conquest_btn" type="button" id="addConquest_btn1"
-								class="btn btn-outline-success">정복한 산!!</button> -->
-							<form action='<c:url value="Conquest/addConquest" />'
-								method="post" id="addConquest">
-								<table>
-
-									<tr>
-										<td hidden="hidden">정복최대횟수</td>
-										<td class="maxconquest" hidden="hidden">100000000000</td>
-										<td><input hidden="hidden" name="member_no"
-											value="${authUser.no }"></input> <input hidden="hidden"
-											name="mountain_no" value="291"></input>
-											<button id="btn-1" name="conquestcnt" type="button"
-												onclick="Count('p',this);" class="btn btn-outline-success"
-												type="submit">정복!!!!</button> <input type="text"
-											name="conquestcnt" value="1" readonly="readonly"
-											style="text-align: center;" />
-											<button name="conquestcnt" type="button"
-												onclick="Count('m', this);" class="btn btn-outline-success"
-												type="submit">잘못눌렀네,,</button></td>
-									</tr>
-								</table>
-
-
-								<!--  1.북한산 291
-2. 도봉산 740
-3. 수락산 44
-4. 인왕산 294
-5. 아차산 297
-6. 관악산 61 -->
-							
-
-							</form>
-							<form action='<c:url value="Conquest/updateConquest" />'method="post" id="updateConquest">
-							<input hidden="hidden" name="conquestcnt" value=""></input>
-							<button id="up-btn" type="submit"> update </button>
-							</form>
-							
-									초반 script사용소스	 <img id="bughansan"
-								src="${root }/resources/img/conquest/mountain_black.png">
-							<script>
-									document.getElementById('bughansan').src = bughansan_info()
-								</script> 
-						</div>
-					</div>
-				</figure>
-
-			</div>
-
- 
-			<div>
-				<figure>
-					<img src="${root }/resources/img/conquest/dobongsan.png"
-						class="img-responsive img-rounded" />
-					<h4>도봉산 도장깨기</h4>
-					<div class="overlay">
-						<div class="description"> 스티커이미지 추가추가추가~
-							스크립트로 표현하는경우<img id="title" src="">
-							<script>
-								document.getElementById('title').src = title_info()
-							</script>
-
-						</div>
-
-					</div>
-
-				</figure>
-			</div>
-
-			<div>
-				<figure>
-					<img src="${root }/resources/img/conquest/sulagsan.png"
-						class="img-responsive img-rounded" />
-					<h4>수락산 도장깨기</h4>
-					<div class="overlay">
-						<div class="description">스티커이미지 추가추가추가~</div>
-					</div>
-				</figure>
-
-			</div>
-			<div>
-				<figure>
-					<img src="${root }/resources/img/conquest/in-wangsan.png"
-						class="img-responsive img-rounded" />
-					<h4>인왕산 도장깨기</h4>
-					<div class="overlay">
-						<div class="description">스티커이미지 추가추가추가~</div>
-					</div>
-				</figure>
-
-			</div>
-			<div>
-				<figure>
-					<img src="${root }/resources/img/conquest/achasan.png"
-						class="img-responsive img-rounded" />
-					<h4>아차산 도장깨기</h4>
-					<div class="overlay">
-						<div class="description">스티커이미지 추가추가추가~</div>
-					</div>
-				</figure>
-
-			</div>
-			<div>
-				<figure>
-					<img src="${root }/resources/img/conquest/gwan-agsan.png"
-						class="img-responsive img-rounded" />
-					<h4>관악산 도장깨기</h4>
-					<div class="overlay">
-						<div class="description">스티커이미지 추가추가추가~</div>
-					</div>
-				</figure>
-
-			</div>
- 
-		</div>
-	</div> 
-	
-	 --%>
-	
-
 
 </body>
 </html>
