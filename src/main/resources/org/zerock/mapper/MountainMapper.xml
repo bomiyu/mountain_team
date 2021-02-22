@@ -85,7 +85,7 @@
 	<!-- 	SELECT mountain_no, mname, sum(conquestcnt) conquestcnt
 		FROM 
 		( -->
-			SELECT mountain_no, conquestcnt, mname
+			SELECT c.no as cno,  mountain_no, conquestcnt, mname
 			FROM conquest c JOIN mountain m 
 			ON c.mountain_no = m.no 
 			WHERE c.member_no = #{user_no}

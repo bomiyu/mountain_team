@@ -39,7 +39,8 @@
 	</insert>
 
 	<update id="updateConquest">
-	UPDATE Conquest SET conquest cnt = #{conquestcnt}, condate = sysdate where no= #{no} </update>
+	UPDATE Conquest SET conquestcnt = #{conquestcnt}, condate = sysdate where member_no= #{member_no} and mountain_no = #{mountain_no} 
+	 </update>
 
 	<!-- 레코드 갯수 확인용 -->
 

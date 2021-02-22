@@ -49,11 +49,9 @@ public class ConquestController {
 	 * (HttpStatus.INTERNAL_SERVER_ERROR); } }
 	 */
 
-	@PostMapping(value = "/updateConquest",
-				 consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
-				 produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@PostMapping(value = "/updateConquest")
 	// consumes: 이 타입만 서버에서 받겠다, @RequestBody: request의 body를 자바 객체로 변환해서 서버에서 쓰겠다
-	public ResponseEntity<List<ConqStickerVO>> updateConquest(@RequestBody ConquestVO cvo) {
+	public ResponseEntity<List<ConqStickerVO>> updateConquest(ConquestVO cvo) {
 		// 파라미터로 들어와는(Request의 body부분에 해당:어노테이션) conquestvo의 정보:
 		// (어떤 멤버)가 (어떤 산)을 (정복한 횟수)를 수정하겠다
 		log.info("UPvo: " + cvo);

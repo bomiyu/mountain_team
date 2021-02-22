@@ -13,10 +13,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.zerock.domain.conquest.ConquestVO;
+import org.zerock.domain.freeboard.FreeBoardVO;
 import org.zerock.domain.member.MEmailDTO;
 import org.zerock.domain.member.MemberVO;
 import org.zerock.domain.mountain.ConqStickerVO;
@@ -148,13 +150,21 @@ public class MemberController {
 				for(MnameVO m : list) {// db에 있는 산 리스트 돌려서
 					long member_no = user.getNo();
 					long mountain_no = m.getNo();
+					log.info(m);
 					if(conqService.checkCnt(member_no, mountain_no) == 0) {// Conquest table에 레코드 없으면
 						ConquestVO cvo = new ConquestVO();
 						cvo.setMember_no(member_no);
 						cvo.setMountain_no(mountain_no);
 						cvo.setConquestcnt(0);
 						conqService.addConquest(cvo);// conquestcnt 0으로 세팅해서 add(insert)
-					}
+						
+						
+					} /*
+						 * else if(conqService.checkCnt(member_no, mountain_no) != 0) {// Conquest
+						 * table에 레코드 없으면 ConquestVO cvo = new ConquestVO();
+						 * cvo.setMember_no(member_no); cvo.setMountain_no(mountain_no);
+						 * cvo.setConquestcnt(conquestcnt); conqService.updateConquest(cvo);)
+						 */
 					
 					
 				}
@@ -205,15 +215,19 @@ public class MemberController {
 
 	// ##내 정보 보기
 	@GetMapping("/myHome")
-	public String myHome(Model model, HttpSession session) {
-		MemberVO vo = (MemberVO) session.getAttribute("authUser");
+	public String myHome(Model model, /* @ModelAttribute("cvo") ConquestVO cvo, */HttpSession session) {
+		
+		 MemberVO vo = (MemberVO) session.getAttribute("authUser");
+//		 * model.addAttribute("cvo",cvo);
+//		 */
 		
 		List<ConqStickerVO> list = null;
 		
 		if (vo != null) {
-			list = mountainService.getConqListbyMem(vo.getNo());// 이 리스트를 보내도 되나,,,?
+			list = mountainService.getConqListbyMem(vo.getNo());
+			model.addAttribute("list", list);
 		}
-		model.addAttribute("list", list);
+		
 		return "/member/myHome";
 
 		// return "redirect:member/myHome";

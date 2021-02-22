@@ -118,9 +118,9 @@
 			
 			$.ajax({
 				type : "post",
-				url : appRoot + "/Conquest/updateConquest", // 컨트롤러 매핑
-				contentType: "application/json",// 이 타입으로 data를 보내겠다 컨트롤러에
-				data : {"conquestcnt": conquestcnt}, // form data를 json
+				url : "${root}/Conquest/updateConquest", // 컨트롤러 매핑
+				//contentType: "application/json",// 이 타입으로 data를 보내겠다 컨트롤러에
+				data : data, // form data를 json
 				success : function(result, stauts, xhr) {
 					if (callback) {
 						callback(result);
@@ -138,16 +138,16 @@
 	/* 카운트 ajax로 데이터 보내기 */
 	$(document).ready(function() {
 		//$("#addConquest").serializeArray();
-		$("#up-btn").click(function(e) {
+		$(".up-btn").click(function(e) {
 			e.preventDefault();
-			ConquestService.updateConquest($("#updateConquest").serialize());
+			updateConquest($(this).closest("form").serialize());
 		});
 	});
 	
 	
 	/* 정복산 count */
 	function Count(type, ths) {
-		var $input = $(ths).parents("td").find("input[name='plusminus']");// name을 찾아 $input에 넣음
+		var $input = $(ths).parents("td").find("input[name='conquestcnt']");// name을 찾아 $input에 넣음
 		var CCCount = Number($input.val()); //Number타입변환
 		var MCount = Number($(ths).parents("tr").find("td.maxconquest").html());//maxconquest찾음
 		if (type == 'p') { //plus약자
@@ -396,31 +396,29 @@ figure:hover .overlay {
 					<div class="overlay">
 						<div class="description">
 						
-							<form action='<c:url value="Conquest/addConquest" />'
-									method="post" id="addConquest">
+							<form action='<c:url value="Conquest/updateConquest" />'
+									method="post" id="updateConquest">
 									
 									<table>
 										<tr>
 											<td hidden="hidden">정복최대횟수</td>
 											<td class="maxconquest" hidden="hidden">100000000000</td>
 											<td>
-												<input hidden="hidden" name="member_no" value="${authUser.no }"></input>
-												<input hidden="hidden" name="mountain_no" value="${conq.mountain_no }"></input>
-												<button id="add-btn" name="plusminus" type="button" class="btn btn-outline-success"
+												 <input hidden="hidden" name="member_no" value="${authUser.no }"></input>
+												<input hidden="hidden" name="mountain_no" value="${conq.mountain_no }"></input> 
+												<button id="plus" name="plusminus" type="button" class="btn btn-outline-success"
 													onclick="Count('p',this);" type="submit">정복!!!!</button>
 												<input type="text" name="conquestcnt" value="${conq.conquestcnt }" readonly="readonly" style="text-align: center;" />
-												<button name="plusminus" type="button" onclick="Count('m', this);" 
-													class="btn btn-outline-success" type="submit">잘못눌렀네,,</button>
+												<button name="minus" type="button" onclick="Count('m', this);" 
+													class="btn btn-outline-success">잘못눌렀네,,</button>
+													
+										<button class="up-btn" id="up-btn" type="submit"> update </button>
 											</td>
 										</tr>
 									</table>			
 	
 							</form>
 								
-							<form action='<c:url value="Conquest/updateConquest" />'method="post" id="updateConquest">
-								<input hidden="hidden" name="conquestcnt" value="${conq.conquestcnt }"></input>
-								<button id="up-btn" type="submit"> update </button>
-							</form>
 						
 						</div>
 					</div>
