@@ -218,7 +218,7 @@ figure .overlay .description {
 	top: 50%;
 	left: 50%;
 	-webkit-transform: translate(-50%, -50%);
-	-ms-transform: translate(-50%, -50%);
+	-ms-transform: translate(-10%, -10%);
 	transform: translate(-50%, -50%);
 	text-align: center;
 }
@@ -366,13 +366,10 @@ figure:hover .overlay {
 			</div>
 		</div>
 	</div>
-</div>
-</div>
-</div>
+
 	<!-- 정복 산 리스트 -->
 
 	<!-- row 방향으로 가로 배열할 때, 중앙 정렬  -->
-<div class="container-sm">
 	<div id="imgs" class="row-vh d-flex flex-column justify-content-center" ><!-- row방향으로 가운데 정렬 -->
 		<c:forEach items="${list }" var="conq">
 	     
@@ -440,5 +437,7 @@ figure:hover .overlay {
 				</div>
 </div>
 
+</div>
+</div>
 </body>
 </html>
