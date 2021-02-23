@@ -75,7 +75,7 @@
 			var stickerNum = $(item).closest("table").find("[name=conquestcnt]").val();
 			
 			for (var i = 0; i < stickerNum; i++) {
-				switch (i % 4) {
+				switch (i % 3) {
 				case 0:
 					$(item).append('<div><img src="<c:out value="${root }/resources/img/conquest/mountain_black.png"/>" /> </div>'  ); 
 					break;
@@ -85,8 +85,6 @@
 				case 2:
 					$(item).append('<div><img src="<c:out value="${root }/resources/img/conquest/mountain_blue.png"/>" /> </div>'  ); 
 					break;
-				case 3:
-					$(item).append('<div><img src="<c:out value="${root }/resources/img/conquest/mountain_red.png"/>" /> </div>'  ); 
 				}
 				
 			}
@@ -146,7 +144,7 @@
 		$(ths).closest('table').find('.sticker' ).empty();
 		for (var i = 0; i < $input.val(); i++) {
 			//$(ths).closest('table').find('.sticker' ).append('<div><img src="<c:out value="${root }/resources/img/conquest/mountain_black.png"/>" /> </div>'  ); 
-			switch (i % 4) {
+			switch (i % 3) {
 			case 0:
 				$(ths).closest('table').find('.sticker' ).append('<div><img src="<c:out value="${root }/resources/img/conquest/mountain_black.png"/>" /> </div>'  );
 				break;
@@ -156,8 +154,6 @@
 			case 2:
 				$(ths).closest('table').find('.sticker' ).append('<div><img src="<c:out value="${root }/resources/img/conquest/mountain_blue.png"/>" /> </div>'  );
 				break;
-			case 3:
-				$(ths).closest('table').find('.sticker' ).append('<div><img src="<c:out value="${root }/resources/img/conquest/mountain_red.png"/>" /> </div>'  ); 
 			}
 		}
 	}
@@ -169,6 +165,11 @@
 <style>
 
 /*sticker이미지 사이즈*/
+#imgs{
+width:700px;
+text-align:center;
+
+}
 .sticker {
 	position: static;
 }
@@ -180,7 +181,7 @@
 
 /* 산정복 효과 */
 figure {
-	width: 100%;
+	width:100%;
 	position: relative;
 }
 figure img {
@@ -233,7 +234,9 @@ figure:hover .overlay {
 </head>
 <body>
 	<m:topNav />
-
+<div class="container-sm">
+		<div class="row">
+			<div class="col-12 col-lg-6 offset-lg-3">
 	<!--내 정보 보기 -->
 	<form>
 		<div class="form-group row">
@@ -363,21 +366,19 @@ figure:hover .overlay {
 			</div>
 		</div>
 	</div>
-
+</div>
+</div>
+</div>
 	<!-- 정복 산 리스트 -->
-	<p>카운트확인!!!!!!!${list.size() }</p>
 
 	<!-- row 방향으로 가로 배열할 때, 중앙 정렬  -->
-	
-	
-		<div class="container">
-	<div class="row d-flex flex-row justify-content-center"  >
-			
+<div class="container-sm">
+	<div id="imgs" class="row-vh d-flex flex-column justify-content-center" ><!-- row방향으로 가운데 정렬 -->
 		<c:forEach items="${list }" var="conq">
-	<div>
+	     
 				<figure>
 				
-					<img src='<c:out value="${root }/resources/img/conquest/${conq.mname}.png"/>' width="150"
+					<img id="imgs" src='<c:out value="${root }/resources/img/conquest/${conq.mname}.png"/>' onerror='this.src="${root }/resources/img/conquest/error/error이미지.png"'
 						class="img-responsive img-rounded" /><!-- items에 서버단에서 DB연동결과물 request.setAttribute("키값명",저장객체) 와야함 -->
 						           
 					<h4>${conq.mname } 도장깨기</h4>
@@ -386,15 +387,16 @@ figure:hover .overlay {
 						
 							<form action='<c:url value="Conquest/updateConquest" />'
 									method="post" id="updateConquest">
-									
+									 
+									<div class="container">
 									<table>
-										<tr>
+ 										<tr>
 											<td hidden="hidden">정복최대횟수</td>
 											<td class="maxconquest" hidden="hidden">100000000000</td>
 											<td>
 											
-									
-											<div class="sticker d-flex" >
+											
+											<div class="sticker d-flex flex-wrap " > <!-- 컨테이너 벗어나지 않게 -->
 											 <%--  test용 이미지 
 											 	<div><img src='<c:out value="${root }/resources/img/conquest/mountain_black.png"/>' width="20"/> </div> 
 											 	<div><img src='<c:out value="${root }/resources/img/conquest/mountain_black.png"/>' width="20"/> </div> 
@@ -412,8 +414,7 @@ figure:hover .overlay {
 										
 											<tr>
 												<td>
-												<div style="display: table;">
-												<div class="item mb-auto" >
+												<div class=" mb-auto align-self-end" >
 													<input hidden="hidden" name="member_no" value="${authUser.no }"></input>
 													<input hidden="hidden" name="mountain_no" value="${conq.mountain_no }"></input> 
 													<button id="plus" name="plusminus" type="button" class="btn btn-success"
@@ -422,11 +423,11 @@ figure:hover .overlay {
 													<button name="minus" type="button" onclick="Count('m', this);" 
 													class="btn btn-outline-success">잘못눌렀네,,</button>													
 													<div><button class="up-btn btn btn-success" id="up-btn" type="submit"> update </button></div>
-											 </div>
 												 </div>
 												 </td>
 											 </tr>
 											 </table>	
+											</div>
 							</form>
 								
 						
@@ -435,10 +436,8 @@ figure:hover .overlay {
 				
 					
 				</figure>
-			</div>
 				</c:forEach>
-				
-		</div>
+				</div>
 </div>
 
 </body>
