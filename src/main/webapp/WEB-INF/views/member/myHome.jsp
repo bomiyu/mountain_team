@@ -69,47 +69,33 @@
 				$("#memberDeleteSuccessModal").modal('show');
 			});
 		});
+		
+		//conquestcnt
+		$(".sticker").each(function(index, item) {
+			var stickerNum = $(item).closest("table").find("[name=conquestcnt]").val();
+			
+			for (var i = 0; i < stickerNum; i++) {
+				switch (i % 4) {
+				case 0:
+					$(item).append('<div><img src="<c:out value="${root }/resources/img/conquest/mountain_black.png"/>" /> </div>'  ); 
+					break;
+				case 1:
+					$(item).append('<div><img src="<c:out value="${root }/resources/img/conquest/mountain_yellow.png"/>" /> </div>'  ); 
+					break;
+				case 2:
+					$(item).append('<div><img src="<c:out value="${root }/resources/img/conquest/mountain_blue.png"/>" /> </div>'  ); 
+					break;
+				case 3:
+					$(item).append('<div><img src="<c:out value="${root }/resources/img/conquest/mountain_red.png"/>" /> </div>'  ); 
+				}
+				
+			}
+		});
 	});
 </script>
 
 
 <script>
-
-/*insert
-	var ConquestService = (function() {
-		function addConquest(data, callback, error) {
-			console.log(JSON.stringify(data));
-			console.log(data);
-			$.ajax({
-				type : "post",
-				url : appRoot + "/Conquest/addConquest", // 컨트롤러 매핑
-				data : data, // form data를 json
-				success : function(result, stauts, xhr) {
-					if (callback) {
-						callback(result);
-					}
-				},
-				error : function(xhr, status, er) {
-					if (error) {
-						error(er);
-					}
-				}
-			});
-		}
-		return {
-			addConquest : addConquest
-		};
-	})();
-
-	$(document).ready(function() {
-		//$("#addConquest").serializeArray();
-		$("#add-btn").click(function(e) {
-			e.preventDefault();
-			ConquestService.addConquest($("#addConquest").serialize());
-		});
-	});
- */
-	
 	/*update*/
 
 		function updateConquest(data, callback, error) {
@@ -122,9 +108,10 @@
 				//contentType: "application/json",// 이 타입으로 data를 보내겠다 컨트롤러에
 				data : data, // form data를 json
 				success : function(result, stauts, xhr) {
-					if (callback) {
-						callback(result); 
-
+					if (result) {
+						alert('정복횟수가 업데이트 되었습니다.' );
+				/* 	$('sticker' ).append('<div><img src='<c:out value="${root }/resources/img/conquest/mountain_black.png"/>' /> </div>'  );
+						  */
 					}
 				},
 				error : function(xhr, status, er) {
@@ -138,25 +125,40 @@
 
 	/* 카운트 ajax로 데이터 보내기 */
 	$(document).ready(function() {
-		//$("#addConquest").serializeArray();
 		$(".up-btn").click(function(e) {
 			e.preventDefault();
 			updateConquest($(this).closest("form").serialize());//엘리멘트의 가장가까운 level만 변경
 		});
 	});
-	$('sticker' ).append('<div><img src='<c:out value="${root }/resources/img/conquest/mountain_black.png"/>' /> </div>'  );
 	
 	/* 정복산 count */
 	function Count(type, ths) {
 		var $input = $(ths).parents("td").find("input[name='conquestcnt']");// name을 찾아 $input에 넣음
 		var CCCount = Number($input.val()); //Number타입변환
-		var MCount = Number($(ths).parents("tr").find("td.maxconquest").html());//maxconquest찾음
+		var MCount = Number($(ths).parents("div").find("td.maxconquest").html());//maxconquest찾음
 		if (type == 'p') { //plus약자
 			if (CCCount < MCount)
 				$input.val(Number(CCCount) + 1);// MAX값보다 작을때 +
 		} else {
 			if (CCCount > 0)
 				$input.val(Number(CCCount) - 1); //입력값이 0이상일경우에 -
+		}
+		$(ths).closest('table').find('.sticker' ).empty();
+		for (var i = 0; i < $input.val(); i++) {
+			//$(ths).closest('table').find('.sticker' ).append('<div><img src="<c:out value="${root }/resources/img/conquest/mountain_black.png"/>" /> </div>'  ); 
+			switch (i % 4) {
+			case 0:
+				$(ths).closest('table').find('.sticker' ).append('<div><img src="<c:out value="${root }/resources/img/conquest/mountain_black.png"/>" /> </div>'  );
+				break;
+			case 1:
+				$(ths).closest('table').find('.sticker' ).append('<div><img src="<c:out value="${root }/resources/img/conquest/mountain_yellow.png"/>" /> </div>'  ); 
+				break;
+			case 2:
+				$(ths).closest('table').find('.sticker' ).append('<div><img src="<c:out value="${root }/resources/img/conquest/mountain_blue.png"/>" /> </div>'  );
+				break;
+			case 3:
+				$(ths).closest('table').find('.sticker' ).append('<div><img src="<c:out value="${root }/resources/img/conquest/mountain_red.png"/>" /> </div>'  ); 
+			}
 		}
 	}
 	
@@ -167,10 +169,12 @@
 <style>
 
 /*sticker이미지 사이즈*/
+.sticker {
+	position: static;
+}
 
-.sticker{   
+.sticker img{   
 	width: 30px;/*크기*/
-	flex-wrap: wrap ;
 }
 
 
@@ -221,7 +225,7 @@ figure:hover h4 {
 	display: none;
 }
 figure:hover .overlay {
-	display: block;
+ 	display: block; 
 	height: 100%;
 }
 </style>
@@ -367,13 +371,13 @@ figure:hover .overlay {
 	
 	
 		<div class="container">
-	<div class="row d-flex flex-row justify-content-center">
+	<div class="row d-flex flex-row justify-content-center"  >
 			
 		<c:forEach items="${list }" var="conq">
 	<div>
 				<figure>
 				
-					<img src='<c:out value="${root }/resources/img/conquest/${conq.mname}.png"/>' width="150" 
+					<img src='<c:out value="${root }/resources/img/conquest/${conq.mname}.png"/>' width="150"
 						class="img-responsive img-rounded" /><!-- items에 서버단에서 DB연동결과물 request.setAttribute("키값명",저장객체) 와야함 -->
 						           
 					<h4>${conq.mname } 도장깨기</h4>
@@ -390,10 +394,8 @@ figure:hover .overlay {
 											<td>
 											
 									
- 												<div class="row-vh d-flex flex-row align-items-start">									 	
-											 	
-											
-											<%--  test용 이미지 
+											<div class="sticker d-flex" >
+											 <%--  test용 이미지 
 											 	<div><img src='<c:out value="${root }/resources/img/conquest/mountain_black.png"/>' width="20"/> </div> 
 											 	<div><img src='<c:out value="${root }/resources/img/conquest/mountain_black.png"/>' width="20"/> </div> 
 											 	<div><img src='<c:out value="${root }/resources/img/conquest/mountain_black.png"/>' width="20"/> </div> 
@@ -401,26 +403,30 @@ figure:hover .overlay {
 											 	<div><img src='<c:out value="${root }/resources/img/conquest/mountain_black.png"/>' width="20"/> </div>  
 											 	<div><img src='<c:out value="${root }/resources/img/conquest/mountain_black.png"/>' width="20"/> </div>  
 											 	<div><img src='<c:out value="${root }/resources/img/conquest/mountain_black.png"/>' width="20"/> </div>  
-											 	<div><img src='<c:out value="${root }/resources/img/conquest/mountain_black.png"/>' width="20"/> </div>   --%>
-
-												</div>
-
-									     		<div class="item mb-auto">
-												<input hidden="hidden" name="member_no" value="${authUser.no }"></input>
-												<input hidden="hidden" name="mountain_no" value="${conq.mountain_no }"></input> 
-												<button id="plus" name="plusminus" type="button" class="btn btn-success"
-													onclick="Count('p',this);" type="submit">정복+1 !!!!</button>
-												<input type="text" name="conquestcnt" value="${conq.conquestcnt }" readonly="readonly" style="text-align: center;" />
-												<button name="minus" type="button" onclick="Count('m', this);" 
-													class="btn btn-outline-success">잘못눌렀네,,</button>													
-												<div><button class="up-btn btn btn-success" id="up-btn" type="submit"> update </button></div>
-											 
-											 </div>
+											 	<div><img src='<c:out value="${root }/resources/img/conquest/mountain_black.png"/>' width="20"/> </div>   
+											 --%>
+											</div>
 											 											
-											</td>
-										</tr>
-									</table>			
-	
+											</td>									
+											</tr>	
+										
+											<tr>
+												<td>
+												<div style="display: table;">
+												<div class="item mb-auto" >
+													<input hidden="hidden" name="member_no" value="${authUser.no }"></input>
+													<input hidden="hidden" name="mountain_no" value="${conq.mountain_no }"></input> 
+													<button id="plus" name="plusminus" type="button" class="btn btn-success"
+													onclick="Count('p',this);" type="submit">정복+1 !!!!</button>
+													<input type="text" name="conquestcnt" value="${conq.conquestcnt }" readonly="readonly" style="text-align: center;" />
+													<button name="minus" type="button" onclick="Count('m', this);" 
+													class="btn btn-outline-success">잘못눌렀네,,</button>													
+													<div><button class="up-btn btn btn-success" id="up-btn" type="submit"> update </button></div>
+											 </div>
+												 </div>
+												 </td>
+											 </tr>
+											 </table>	
 							</form>
 								
 						
