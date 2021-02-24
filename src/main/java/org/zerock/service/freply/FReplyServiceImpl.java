@@ -46,5 +46,9 @@ public class FReplyServiceImpl implements FReplyService {
 	public List<FReplyVO> getList(Long board_no) {
 		return mapper.getList(board_no);
 	}
+	@Override
+	public int getTotal(Long board_no) {
+		return mapper.getTotalCount(board_no);
+	}
 
 }

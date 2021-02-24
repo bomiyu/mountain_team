@@ -78,9 +78,8 @@ public class FReplyMapperTests {
 		assertEquals("up수정된 댓글", vo.getReply());
 	}
 	@Test
-	public void testList() {
-		List<FReplyVO> list = mapper.getListWithPaging(null, 2L);
-		assertNotEquals(0, list.size());
+	public void testGetList() {
+		log.info(mapper.getList(5L));
 	}
 
 //	@Test // 책 383쪽

@@ -13,4 +13,5 @@ public interface FReplyMapper {
 	public int delete(Long no);
 	public int update(FReplyVO reply);
 	public List<FReplyVO> getList(Long board_no);
+	public int getTotalCount(Long board_no);
 }

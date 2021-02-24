@@ -15,4 +15,5 @@ public interface FReplyService {
 	public int remove(Long no);
 	
 	public List<FReplyVO> getList(Long board_no);
+	public int getTotal(Long board_no);
 }
