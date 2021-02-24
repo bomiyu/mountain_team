@@ -32,8 +32,8 @@
 					if (this.id == 'like-img1') {
 						var resno = $(this).attr("data-resNo");
 						console.log(resno);
-						$(this).attr("src", root+"/resources/like_full.png");
-						$("[id^=dislike-img]").attr("src", root+"/resources/dislike_empty.png");
+						$(this).attr("src", root+"/resources/img/like/like_full.png");
+						$("[id^=dislike-img]").attr("src", root+"/resources/img/like/dislike_empty.png");
 						$.ajax({
 							url : root + '/restaurant/like',
 							type : 'post',
@@ -52,8 +52,8 @@
 						if (this.id == 'like-img2') {
 						var resno = $(this).attr("data-resNo");
 						console.log(resno);
-						$(this).attr("src", root+"/resources/like_full.png");
-						$("[id^=dislike-img]").attr("src", root+"/resources/dislike_empty.png");
+						$(this).attr("src", root+"/resources/img/like/like_full.png");
+						$("[id^=dislike-img]").attr("src", root+"/resources/img/like/dislike_empty.png");
 						$.ajax({
 							url : root + '/restaurant/like',
 							type : 'post',
@@ -72,8 +72,8 @@
 						else if (this.id == 'like-img3') {
 						var resno = $(this).attr("data-resNo");
 						console.log(resno);
-						$(this).attr("src", root+"/resources/like_full.png");
-						$("[id^=dislike-img]").attr("src", root+"/resources/dislike_empty.png");
+						$(this).attr("src", root+"/resources/img/like/like_full.png");
+						$("[id^=dislike-img]").attr("src", root+"/resources/img/like/dislike_empty.png");
 						$.ajax({
 							url : root + '/restaurant/like',
 							type : 'post',
@@ -92,8 +92,8 @@
 						else if (this.id == 'like-img4') {
 						var resno = $(this).attr("data-resNo");
 						console.log(resno);
-						$(this).attr("src", root+"/resources/like_full.png");
-						$("[id^=dislike-img]").attr("src", root+"/resources/dislike_empty.png");
+						$(this).attr("src", root+"/resources/img/like/like_full.png");
+						$("[id^=dislike-img]").attr("src", root+"/resources/img/like/dislike_empty.png");
 						$.ajax({
 							url : root + '/restaurant/like',
 							type : 'post',
@@ -112,8 +112,8 @@
 						else if (this.id == 'like-img5') {
 						var resno = $(this).attr("data-resNo");
 						console.log(resno);
-						$(this).attr("src", root+"/resources/like_full.png");
-						$("[id^=dislike-img]").attr("src", root+"/resources/dislike_empty.png");
+						$(this).attr("src", root+"/resources/img/like/like_full.png");
+						$("[id^=dislike-img]").attr("src", root+"/resources/img/like/dislike_empty.png");
 						$.ajax({
 							url : root + '/restaurant/like',
 							type : 'post',
@@ -170,8 +170,8 @@
 						//var userno = userno;
 						var resno = $(this).attr("data-resNo");
 						console.log(resno);
-						$(this).attr("src", root+"/resources/dislike_full.png");
-						$("[id^=like-img]").attr("src", root+"/resources/like_empty2.png");
+						$(this).attr("src", root+"/resources/img/like/dislike_full.png");
+						$("[id^=like-img]").attr("src", root+"/resources/img/like/like_empty2.png");
 						$.ajax({
 							url : root + '/restaurant/like',
 							type : 'post',
@@ -190,8 +190,8 @@
 					} else if (this.id == 'dislike-img2') {
 						var resno = $(this).attr("data-resNo");
 						console.log(resno);
-						$(this).attr("src", root+"/resources/dislike_full.png");
-						$("[id^=like-img]").attr("src", root+"/resources/like_empty2.png");
+						$(this).attr("src", root+"/resources/img/like/dislike_full.png");
+						$("[id^=like-img]").attr("src", root+"/resources/img/like/like_empty2.png");
 						$.ajax({
 							url : root + '/restaurant/like',
 							type : 'post',
@@ -210,8 +210,8 @@
 					} else if (this.id == 'dislike-img3') {
 						var resno = $(this).attr("data-resNo");
 						console.log(resno);
-						$(this).attr("src", root+"/resources/dislike_full.png");
-						$("[id^=like-img]").attr("src", root+"/resources/like_empty2.png");
+						$(this).attr("src", root+"/resources/img/like/dislike_full.png");
+						$("[id^=like-img]").attr("src", root+"/resources/img/like/like_empty2.png");
 						$.ajax({
 							url : root + '/restaurant/like',
 							type : 'post',
@@ -230,8 +230,8 @@
 					} else if (this.id == 'dislike-img4') {
 						var resno = $(this).attr("data-resNo");
 						console.log(resno);
-						$(this).attr("src", root+"/resources/dislike_full.png");
-						$("[id^=like-img]").attr("src", root+"/resources/like_empty2.png");
+						$(this).attr("src", root+"/resources/img/like/dislike_full.png");
+						$("[id^=like-img]").attr("src", root+"/resources/img/like/like_empty2.png");
 						$.ajax({
 							url : root + '/restaurant/like',
 							type : 'post',
@@ -250,8 +250,8 @@
 					} else if (this.id == 'dislike-img5') {
 						var resno = $(this).attr("data-resNo");
 						console.log(resno);
-						$(this).attr("src", root+"/resources/dislike_full.png");
-						$("[id^=like-img]").attr("src", root+"/resources/like_empty2.png");
+						$(this).attr("src", root+"/resources/img/like/dislike_full.png");
+						$("[id^=like-img]").attr("src", root+"/resources/img/like/like_empty2.png");
 						$.ajax({
 							url : root + '/restaurant/like',
 							type : 'post',

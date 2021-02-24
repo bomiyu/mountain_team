@@ -23,8 +23,11 @@ public interface MountainMapper {
 
 	public List<MountainVO> getListWithPaging(MCriteria mcri);
 
+	public int existMname(String mname);
+
 	// for CONQUEST table
 	public List<MnameVO> getMnameList();
 	
 	public List<ConqStickerVO> getConqListbyMem(Long user_no);// user_no == authUser.no
+
 }

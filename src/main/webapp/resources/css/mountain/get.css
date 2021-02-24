@@ -1,0 +1,32 @@
+@charset "UTF-8";
+
+#mname {
+	width: 35%;	
+	font-size: 1.75rem;
+}
+
+#main_image {
+	width: 100%;
+}
+
+#mname, #height, #description, #mloc {
+	border: none;
+	border-radius: 0px;
+	background-color: white;
+}
+
+#mname:focus, #height:focus, #description:focus, , #mloc:focus {
+    border: none;
+    background-color: white;
+    outline: none;
+    box-shadow: 0 0 0 0;
+}
+
+#height {
+	display: inline-block;
+	width: 20%;
+}
+
+.fileDrop {
+	 border: 1px dashed green;
+}

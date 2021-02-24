@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.mapper.PlaceMapper">
+<sql id = "mountain_no">
+SELECT no FROM mountain WHERE mname LIKE '%' || #{mname} || '%'
+</sql>
+
+<sql id="criteria">
+		<where>
+		<foreach item="type" collection="typeArr" separator="OR">
+			<choose>
+				<when test="type == 'M'.toString()">
+					mountain_no = (SELECT no FROM mountain WHERE mname LIKE '%' || #{keyword} || '%' OR mloc LIKE '%' || #{keyword} || '%')
+				</when>
+				<when test="type == 'N'.toString()">
+					pname LIKE '%' || #{keyword} || '%'
+				</when>
+				<when test="type == 'L'.toString()">
+					ploc LIKE '%' || #{keyword} || '%'
+				</when>
+				<when test="type == 'D'.toString()">
+					description LIKE '%' || #{keyword} || '%'
+				</when>
+			</choose>
+		</foreach>
+	</where>
+</sql>
+
+<select id="getListPaging" resultType="org.zerock.domain.place.PlaceVO">
+<![CDATA[SELECT no, mountain_no, pname, ploc, description, filename, mname
+FROM
+(SELECT ROW_NUMBER() OVER (ORDER BY no DESC) rn, no, mountain_no, pname, ploc, description, filename,
+mname FROM place_view
+]]>
+	 <include refid="criteria"></include>
+
+<![CDATA[
+)
+WHERE rn BETWEEN (#{pageNo} -1) * #{amount} + 1 AND #{pageNo} * #{amount}]]> 
+</select>
+
+<select id="getList" resultType="org.zerock.domain.place.PlaceVO">
+<![CDATA[SELECT*FROM place WHERE no > 0]]>
+</select>
+
+<insert id="insertSelectKey">
+<selectKey keyProperty="no" order="BEFORE" resultType="long">
+select seq_place.nextval from dual
+</selectKey>
+
+insert into place (no, mountain_no, pname, ploc, description, filename)
+values (#{no}, (<include refid="mountain_no"></include>), #{pname}, #{ploc}, #{description}, #{filename})
+</insert>
+
+<!-- (<include refid="mountain_no"></include>) -->
+
+<delete id="delete">
+delete from place where no = #{no}
+</delete>
+
+<update id="update">
+update place set mountain_no= (<include refid="mountain_no"></include>), pname= #{pname}, ploc= #{ploc},
+description= #{description}, filename = #{filename} where no = #{no}
+</update>
+
+<select id="read" resultType="org.zerock.domain.place.PlaceVO">
+SELECT no, mountain_no, pname, ploc, description, filename, mname FROM
+(SELECT ROW_NUMBER() OVER (ORDER BY no DESC) rn, no, mountain_no, pname, ploc, description, filename, mname FROM place_view)<!-- place_view -->
+WHERE no = #{no}
+</select>
+
+<select id="getTotalCnt" resultType="int">
+	SELECT count(*) FROM place_view <include refid="criteria"></include>
+</select>
+
+</mapper>

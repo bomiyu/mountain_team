@@ -23,15 +23,18 @@ SELECT no FROM mountain WHERE mname LIKE '%' || #{mname} || '%'
 				<when test="type == 'F'.toString()">
 					menu LIKE '%' || #{keyword} || '%'
 				</when>
+				<when test="type == 'D'.toString()">
+					description LIKE '%' || #{keyword} || '%'
+				</when>
 			</choose>
 		</foreach>
 	</where>
 </sql>
 
 <select id="getListPaging" resultType="org.zerock.domain.restaurant.RestaurantVO">
-<![CDATA[SELECT no, mountain_no, rname, rloc, contact, menu, description, likecnt, dislikecnt, mname
+<![CDATA[SELECT no, mountain_no, rname, rloc, contact, menu, description, filename, likecnt, dislikecnt, mname
 FROM
-(SELECT ROW_NUMBER() OVER (ORDER BY no DESC) rn, no, mountain_no, rname, rloc, contact, menu, description,
+(SELECT ROW_NUMBER() OVER (ORDER BY no DESC) rn, no, mountain_no, rname, rloc, contact, menu, description, filename,
 likecnt, dislikecnt, mname FROM res_view
 ]]>
 	 <include refid="criteria"></include>
@@ -50,22 +53,27 @@ WHERE rn BETWEEN (#{pageNo} -1) * #{amount} + 1 AND #{pageNo} * #{amount}]]>
 select seq_restaurant.nextval from dual
 </selectKey>
 
-insert into restaurant (no, mountain_no, rname, rloc, contact, menu, description)
-values (#{no}, (<include refid="mountain_no"></include>), #{rname}, #{rloc}, #{contact}, #{menu}, #{description})
+insert into restaurant (no, mountain_no, rname, rloc, contact, menu, description, filename)
+values (#{no}, (<include refid="mountain_no"></include>), #{rname}, #{rloc}, #{contact}, #{menu}, #{description}, #{filename})
 </insert>
 
 <delete id="delete">
 delete from restaurant where no = #{no}
 </delete>
 
+<delete id="deleteLikeResno">
+      DELETE FROM res_like 
+      WHERE resno = #{resno}
+</delete>
+
 <update id="update">
 update restaurant set mountain_no= (<include refid="mountain_no"></include>), rname= #{rname}, rloc= #{rloc}, contact= #{contact}, menu= #{menu}, 
-description= #{description} where no = #{no}
+description= #{description}, filename = #{filename} where no = #{no}
 </update>
 
 <select id="read" resultType="org.zerock.domain.restaurant.RestaurantVO">
-SELECT no, mountain_no, rname, rloc, contact, menu, description, likecnt, dislikecnt, mname FROM
-(SELECT ROW_NUMBER() OVER (ORDER BY no DESC) rn, no, mountain_no, rname, rloc, contact, menu, description, likecnt, dislikecnt, mname FROM res_view)
+SELECT no, mountain_no, rname, rloc, contact, menu, description, filename, likecnt, dislikecnt, mname FROM
+(SELECT ROW_NUMBER() OVER (ORDER BY no DESC) rn, no, mountain_no, rname, rloc, contact, menu, description, filename, likecnt, dislikecnt, mname FROM res_view)
 WHERE no = #{no}
 </select>
 

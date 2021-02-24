@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.mapper.VisitMapper">
+
+<insert id="insert">
+insert into visit (vdate) values (sysdate)
+</insert>
+
+<select id="getTotal" resultType="int">
+	SELECT COUNT(*) FROM visit
+</select>
+
+<select id="getToday" resultType="int">
+	SELECT COUNT(*) FROM visit WHERE TO_DATE(vdate, 'YYYY-MM-DD') = TO_DATE(sysdate, 'YYYY-MM-DD')
+</select>
+</mapper>

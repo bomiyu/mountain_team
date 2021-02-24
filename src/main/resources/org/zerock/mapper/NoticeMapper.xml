@@ -50,6 +50,12 @@
 		WHERE no = #{no}
 	</update>
 
+	<update id="updateReplyCnt">
+		UPDATE notice
+		SET replycnt = replycnt + #{variation}
+		WHERE no = #{no}
+	</update>
+
 	<delete id="delete">
 		DELETE notice WHERE no = #{no}
 	</delete>
@@ -65,10 +71,10 @@
 	<select id="getListWithPaging" resultType="org.zerock.domain.notice.NoticeVO">
    <![CDATA[
    	  SELECT 
-   	  	  no, category, title, content, regdate, cnt, member_no, nickname, reply
+   	  	  no, category, title, content, regdate, cnt, member_no, nickname, reply, replycnt
 	  FROM (
 		  SELECT ROW_NUMBER() OVER (ORDER BY no DESC) rn,
-			     no, category, title, content, regdate, cnt, member_no, nickname, reply
+			     no, category, title, content, regdate, cnt, member_no, nickname, reply, replycnt
 	  	  FROM noticeInfo
    ]]>
    

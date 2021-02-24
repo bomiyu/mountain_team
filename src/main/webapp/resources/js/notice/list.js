@@ -26,7 +26,7 @@ $(function(){
 			  title: "Removed",
 			  text: "공지가 삭제되었습니다.",
 			  icon: "success",
-			  button: "close",
+			  button: "close"
 			});
 			
 		}
@@ -34,6 +34,10 @@ $(function(){
 	
 	$('h3').click(function(){
 		location.href = root + '/notice/list';
+	});
+	
+	$('.fa-ellipsis-v').click(function(){
+		
 	});
 	
 });

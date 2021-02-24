@@ -18,4 +18,5 @@ public interface LikeMapper {
 	public int getLike(@Param("userno") Long userno, @Param("resno") Long resno);
 	
 	public int getDislike(@Param("userno") Long userno, @Param("resno") Long resno);
+	
 }

@@ -22,5 +22,6 @@ public interface RestaurantMapper {
 	
 	public int getTotalCnt(Rcriteria cri);
 	
-
+	public int deleteLikeResno(Long no);
+	
 }

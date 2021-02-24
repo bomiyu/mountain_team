@@ -11,4 +11,6 @@ public class MountainVO {
    private int status;
    private String description;
    
+   private String filename;
+   
 }

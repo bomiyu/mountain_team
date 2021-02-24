@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.zerock.mapper.FestivalMapper">
+	<sql id="Fcriteria">
+		<where>
+			<if test="keyword !=null">
+				eName LIKE '%' || #{keyword} || '%'
+				OR description LIKE '%' || #{keyword} || '%'
+			</if>
+		</where>
+	</sql>
+
+	<!-- 게시글 목록 -->
+	<select id="getList"
+		resultType="org.zerock.domain.festival.FestivalVO">
+  <![CDATA[
+  select * from festival where no> 0
+  ORDER BY no DESC
+  ]]>
+	</select>
+
+	<select id="getListPaging"
+		resultType="org.zerock.domain.festival.FestivalVO">
+  <![CDATA[
+  SELECT no, ename, description, month, mountain_no  
+  FROM
+  (
+  SELECT 
+  ROW_NUMBER() OVER (ORDER BY no DESC) rn,
+  no, ename,description, month,mountain_no
+  FROM
+  festival
+  ]]>
+		<include refid="Fcriteria"></include>
+  <![CDATA[
+	 	)
+	WHERE
+		rn BETWEEN (#{pageNum} - 1) * #{amount} + 1 AND #{pageNum} * #{amount}
+	]]>
+	</select>
+
+
+	<!-- 게시글 작성 -->
+	<insert id="insert">
+		insert into festival (no, ename, description, month, mountain_no )
+		values(seq_festival.nextval, #{ename}, #{description}, #{month}, #{mountain_no}) 
+	</insert>
+
+	<!-- 게시글 SelectKey -->
+	<insert id="insertSelectKey">
+		<selectKey keyProperty="no" order="BEFORE" resultType="int">
+			select seq_festival.nextval from dual
+		</selectKey>
+
+		insert into festival(no, ename, description, month, mountain_no, filename)
+		values (#{no}, #{ename}, #{description}, #{month},#{mountain_no}, #{filename, jdbcType=VARCHAR})
+	</insert>
+
+	<!-- 게시글 상세보기 -->
+	<select id="get"
+		resultType="org.zerock.domain.festival.FestivalVO">
+		select * from festival where no =#{no}
+	</select>
+
+	<!-- 게시글 조회수 증가 처리하기 <update id="increaseViewcnt"> UPDATE festival set viewcnt 
+		= viewcnt +1 WHERE no =#{no} </update> -->
+
+	<!-- 게시글 수정 -->
+	<update id="update">
+		update festival
+		set
+		eName =#{ename},
+		description = #{description},
+		month =#{month},
+		mountain_no = #{mountain_no},
+		filename=  #{filename, jdbcType=VARCHAR}
+		where
+		no =#{no}
+	</update>
+
+	<!-- 게시글 삭제 -->
+	<delete id="delete">
+		delete from festival where no =#{no}
+	</delete>
+
+	<select id="getTotalCount" resultType="int">
+		SELECT count(*) FROM festival
+		<include refid="Fcriteria"></include>
+	</select>
+
+	<select id="read" parameterType="int"
+		resultType="org.zerock.domain.festival.FestivalVO">
+		SELECT no, ename, description, month, mountain_no
+		FROM festival
+		WHERE no= #{no}
+
+	</select>
+
+</mapper>

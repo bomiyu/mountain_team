@@ -8,7 +8,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="${root }/resources/css/font.css">
 <!-- MOBILE최적화 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -22,6 +21,7 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
 
 
 <script>
@@ -68,8 +68,8 @@
 
 			});
 </script>
-<%-- <link rel="stylesheet" type="text/css"
-	href="${root }/resources/css/font.css"> --%>
+	
+	<link rel="stylesheet" type="text/css" href="${root }/resources/css/font.css">
 <title>산산산</title>
 
 

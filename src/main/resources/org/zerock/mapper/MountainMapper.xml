@@ -24,8 +24,8 @@
 			SELECT seq_mountain.nextval FROM dual
 		</selectKey>
 
-		INSERT INTO mountain (no, mname, mloc, height, status, description)
-		VALUES (#{no}, #{mname}, #{mloc}, #{height}, #{status}, #{description})
+		INSERT INTO mountain (no, mname, mloc, height, status, description, filename) <!-- null 허용 -->
+		VALUES (#{no}, #{mname}, #{mloc}, #{height}, #{status}, #{description}, #{filename, jdbcType=VARCHAR})
 	</insert>
 
 	<select id="read" resultType="org.zerock.domain.mountain.MountainVO">
@@ -39,6 +39,9 @@
 			height = #{height},
 			status = #{status},
 			description = #{description}
+			<if test="filename != null">
+			, filename = #{filename, jdbcType=VARCHAR} <!-- null 허용 -->
+			</if> 
 		WHERE no = #{no}
 	</update>
 
@@ -55,12 +58,12 @@
 
 	<select id="getListWithPaging" resultType="org.zerock.domain.mountain.MountainVO">
 	<![CDATA[
-	SELECT no, mname, mloc, height, status, description
+	SELECT no, mname, mloc, height, status, description, filename
 	FROM 
 		(
 		SELECT
 			ROW_NUMBER() OVER (ORDER BY no DESC) rn,
-			no, mname, mloc, height, status, description
+			no, mname, mloc, height, status, description,filename
 		FROM 
 			mountain
 	]]>
@@ -74,6 +77,12 @@
 	]]>
 	</select>
 
+	<select id="existMname" parameterType="String" resultType="int">
+		SELECT count(*) 
+		FROM mountain 
+		WHERE mname = #{mname}
+	</select>
+
 
 	<!-- for CONQUEST table -->
 	<select id="getMnameList" resultType="org.zerock.domain.mountain.MnameVO">
@@ -82,17 +91,11 @@
 	</select>
 	
 	<select id="getConqListbyMem" parameterType="long" resultType="org.zerock.domain.mountain.ConqStickerVO">
-	<!-- 	SELECT mountain_no, mname, sum(conquestcnt) conquestcnt
-		FROM 
-		( -->
-			SELECT c.no as cno,  mountain_no, conquestcnt, mname
-			FROM conquest c JOIN mountain m 
-			ON c.mountain_no = m.no 
-			WHERE c.member_no = #{user_no}
-			ORDER BY m.mname
-		<!-- )
-		GROUP BY mountain_no, mname
-		ORDER BY mname -->
+		SELECT c.no as cno,  mountain_no, conquestcnt, mname
+		FROM conquest c JOIN mountain m 
+		ON c.mountain_no = m.no 
+		WHERE c.member_no = #{user_no}
+		ORDER BY m.mname
 	</select>
 	
 </mapper>	

@@ -1,0 +1,41 @@
+@charset "UTF-8";
+
+table td {
+	padding: 20px;
+}
+
+#search input {
+	width: 45%;
+	display: inline-block;
+}
+
+#search input:focus {
+ 	border-color: #ced4da;
+	outline: none;
+	box-shadow: none;
+}
+
+#search button {
+	width: 10%;
+}
+
+#search a {
+	float: right;
+}
+
+.page-item.active .page-link {
+	background-color: #BCFF66;
+	border-color: #BCFF66;
+}
+
+.page-item a {
+	color: #BCFF66;
+}
+
+.page-link:hover {
+	color: #BCFF66;
+}
+
+tr {
+	width: 33%;
+}
