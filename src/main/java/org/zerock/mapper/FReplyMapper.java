@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.zerock.domain.freeboard.FCriteria;
-import org.zerock.domain.freeboard.FReplyVO;
+import org.zerock.domain.freply.FReplyVO;
 
 
 public interface FReplyMapper {

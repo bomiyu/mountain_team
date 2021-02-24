@@ -85,6 +85,10 @@
 			updateConquest($(this).closest("form").serialize());//엘리멘트의 가장가까운 level만 변경
 		});
 		
+			$(".down-btn").click(function(e) {
+			e.preventDefault();
+			updateConquest($(this).closest("form").serialize());//엘리멘트의 가장가까운 level만 변경
+		});
 		
 		
 		

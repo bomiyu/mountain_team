@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.zerock.domain.freeboard.FCriteria;
-import org.zerock.domain.freeboard.FReplyVO;
+import org.zerock.domain.freply.FReplyVO;
 import org.zerock.domain.member.MemberVO;
 import org.zerock.service.freply.FReplyService;
 

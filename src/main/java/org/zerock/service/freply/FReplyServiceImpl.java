@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.zerock.domain.freeboard.FCriteria;
-import org.zerock.domain.freeboard.FReplyVO;
+import org.zerock.domain.freply.FReplyVO;
 import org.zerock.mapper.FReplyMapper;
 import org.zerock.mapper.FreeBoardMapper;
 
