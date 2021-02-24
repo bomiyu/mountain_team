@@ -117,12 +117,15 @@
 											});
 						}
 
-						/* 	// 댓글쓰기 버튼 click이벤트 처리
+						// 댓글쓰기 버튼 click이벤트 처리
 						 $("#new-freply-button").click(function() { //댓글 쓰기 id가져옴
 						 console.log("댓글쓰기버튼 동작????????");
 						 $("#new-freply-modal").modal("show");
+							// 모달창 내의 textarea 요소들 value를 초기화
+							$("#new-freply-modal textarea")
+									.val("");
 
-						 }); */
+						 }); 
 
 						//모달창_새로운 댓글_등록버튼 처리
 						$("#freply-submit-button")
@@ -147,8 +150,7 @@
 													.register(
 															data,
 															function() {
-																// 댓글 목록 가져오기 실행
-																showList();
+																showList(); 
 																alert("${authUser.nickname}"
 																		+ "님의 댓글 등록에 성공하였습니다.");
 															},

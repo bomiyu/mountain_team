@@ -68,8 +68,7 @@
 
 			});
 </script>
-<%-- <link rel="stylesheet" type="text/css"
-	href="${root }/resources/css/font.css"> --%>
+
 <title>산산산</title>
 
 
@@ -82,7 +81,7 @@
  a:hover { text-decoration:none; color:#28a745;}
 
 
-h5 {
+h3 {
 	text-align: center;
 	text-size: 60pt;
 }
@@ -100,8 +99,7 @@ h5 {
 color: #28a745;
     border-color: #28a745;
 }
-
-
+* { font-family: "Noto Serif KR" !important; }
 
 
 
@@ -112,7 +110,7 @@ color: #28a745;
 	<div class="container mt-5 ">
 
 		<a href='<c:url value='/freeboard/list'/>'>
-			<h5>자유게시판</h5>
+			<h3>자유게시판</h3>
 		</a>
 
 	</div>
