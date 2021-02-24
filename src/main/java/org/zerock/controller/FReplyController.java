@@ -64,12 +64,11 @@ public class FReplyController {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	
 	public ResponseEntity<List<FReplyVO>> getList(@PathVariable("page") int page, // page값은 FCriteria를 생성 해서 직접 처리
-			@PathVariable("board_no") Long board_no, @ModelAttribute("fcri") FCriteria fcri, Model model, HttpSession session) {
+			@PathVariable("board_no") Long board_no, Model model, HttpSession session) {
 	
 		
-		new FCriteria(page, 10); // FCriteria를 통해 파라미터 수집
 		
-		List<FReplyVO> list = service.getList(fcri, board_no);
+		List<FReplyVO> list = service.getList(board_no);
 		model.addAttribute("freplylist", list);
 		log.info(list);
 	

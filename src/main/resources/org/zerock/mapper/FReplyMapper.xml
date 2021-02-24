@@ -13,7 +13,7 @@
 		VALUES (seq_freply.nextval, #{board_no}, #{reply}, #{replyer})
 	</insert>
 
-	<select id="read" resultType="org.zerock.domain.freeboard.FReplyVO">
+	<select id="read" resultType="org.zerock.domain.freply.FReplyVO">
 		SELECT * FROM FREPLY WHERE no = #{no} 
 	</select>
 	
@@ -28,7 +28,7 @@
 	
 	<select id="getList" resultType="org.zerock.domain.freply.FReplyVO">
 	<![CDATA[
-		SELECT * FROM reply
+		SELECT * FROM FREPLY
 		WHERE board_no = #{board_no}
 		ORDER BY no DESC
 	]]>
