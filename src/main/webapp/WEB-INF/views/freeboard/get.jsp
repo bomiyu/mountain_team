@@ -102,6 +102,12 @@
 												var replyUL = $("#freply-ul");
 												replyUL.empty();
 												for (var i = 0; i < list.length; i++) {
+													
+													if(anick == reply_writer){
+													var replyLI1 ='<li ><input type="button" id="#freply-modify-button" class="btn btn-xs" style="color:green" value="수정" /></small>'
+																	+ '<input type="button" id="freply-delete-button" class="btn btn-xs" style="color:red" value="삭제" /></li>'; 
+													}
+													
 													var replyLI = '<li class="media" data-no="' 
 									+ list[i].no + '" ><div class="media-body"><h5 data-reply="'+list[i].replyer+'" style="float:right;">'
 															+ list[i].replyer
@@ -110,9 +116,12 @@
 															+ dateString(list[i].regdate)
 															+ "</small></h5>"
 															+ list[i].reply
-															+ "<hr></div></li>";
+															+ "<hr></div> </li>";
 															
+													
+													replyUL.append(replyLI1);
 													replyUL.append(replyLI);
+															
 												}
 											});
 						}
