@@ -29,7 +29,7 @@ var root = '${root}';
 </head>
 <body>
 <m:topNav />
-
+	<p> #######################테스트화면###################################</p>
 <div class="container-sm">
    <div class="row">
       <div class="col-12 col-sm-6 offset-sm-3">
@@ -105,12 +105,7 @@ var root = '${root}';
 			
 			
 			
-			<!-- <input type="button" url="" /> -->
 			
-					<form id="mysan" method="post" action="${pageContext.request.contextPath }/conquest/get" >
-					<!--  <input type="hidden" name="user_nickname" value="${authUser.nickname }"/>  -->
-					<button id="" type="submit" class="btn btn-outline-success">내 정복 산 관리</button>
-				</form>
 			<!-- 정복 산 리스트 -->
 
 			<!-- row 방향으로 가로 배열할 때, 중앙 정렬  -->
