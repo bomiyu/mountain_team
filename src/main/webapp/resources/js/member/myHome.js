@@ -80,7 +80,7 @@
 		
 		
 		/* 카운트 ajax로 데이터 보내기 */
-		$(".up-btn").click(function(e) {
+		$(".up-btn, .down-btn").click(function(e) {
 			e.preventDefault();
 			updateConquest($(this).closest("form").serialize());//엘리멘트의 가장가까운 level만 변경
 		});
